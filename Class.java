@@ -1,3 +1,4 @@
+/* 
 public class Class{
     //Starting attributes for all classes should sum to 40
 
@@ -45,3 +46,4 @@ public class Class{
     }
 
 }
+*/

@@ -3,8 +3,15 @@ import java.util.Scanner;
 public class Main{
 
     public static void main(String[] args){
+        Preset pre = new Preset("Marvin", "HUMAN", "MAGE");
+        Preset pre2 = new Preset("Orculus", "ORC", "MAGE");
+        
+        Character xo = new Character(pre);
+        xo.displayCharacterData();
 
-
+        Character xx = new Character(pre2);
+        xx.displayCharacterData();
+        //Note that since the Character class is unfinished, these are all unstable and own't work if Class != MAGE
 
     }
 

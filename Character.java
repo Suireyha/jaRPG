@@ -44,9 +44,9 @@ public class Character{
         
         RaceType type;
     
-        public Race(String selection){
+        public Race(String preset){
             //If this function was called with a race in mind
-            setRace(selection, true); //Yes, I'm aware that this statement will resolve to a true/false value. It doesn't matter. 
+            setRace(preset, true); //Yes, I'm aware that this statement will resolve to a true/false value. It doesn't matter. 
             modifyAttribute();
         }
     
@@ -122,6 +122,58 @@ public class Character{
             initiative += attributes[3];
         }
     
+    }
+
+
+
+
+
+    //CLASS CLASS :3
+    public class Class{ 
+
+        ClassType type;
+        //Starting attributes for all classes should sum to 40
+        // NOTE: THIS CLASS IS UNFINISHED!!!!! IT IS UNSTABLE
+
+        public Class(String preset){
+            if(preset == "MAGE"){
+                type = ClassType.MAGE;
+                setAttributes(5, 15, 5, 15);
+            }
+        }
+
+        public Class(){
+
+        }
+
+        private void setAttributes(int str, int wis, int con, int ini){
+            strength += str;
+            wisdom += wis;
+            constitution += con;
+            initiative += ini;
+        }
+
+        
+    }
+
+    //Display character data
+    public void displayCharacterData(){
+        System.out.println("-------------CHARACTER SHEET-------------");
+        System.out.println("|                                       |");
+        System.out.println("|    Name: " + name + "                      |");
+        System.out.println("|    Class: " + charClass.type + "                        |");
+        System.out.println("|    Race: " + charRace.type + "                          |");
+        System.out.println("|                                       |");
+        System.out.println("|               ATTRIBUTES              |");
+        System.out.println("|                                       |");
+        System.out.println("|    Strength: " + strength + "                        |");
+        System.out.println("|    Wisdom: " + wisdom + "                         |");
+        System.out.println("|    Constitution: " + constitution + "                    |");
+        System.out.println("|    Initiative: " + initiative + "                     |");
+        System.out.println("|                                       |");
+        System.out.println("-----------------------------------------");
+        System.out.println("");
+        System.out.println("");
     }
 
 }
