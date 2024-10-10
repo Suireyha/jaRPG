@@ -2,7 +2,7 @@
 Major Assignment for Comp1010, MQ University
 
 ## Team:
-### Marvin Kelly, Caleb Chew, RJ, Kong
+**Marvin Kelly, Caleb Chew, RJ, Kong**
 
 ## Project Outline:
 
