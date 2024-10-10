@@ -15,6 +15,7 @@ public class Character{
         ASSASSIN
     }
 
+
     //Character Attributes
     public int strength = 0; //Used for non-magical combat rolls
     //public int intelligence = 0; //No use as of now
@@ -95,31 +96,28 @@ public class Character{
         }
     
         private void modifyAttribute(){
-            int[] attributes = {0, 0, 0, 0};
             switch(type){
                 case HUMAN:
                 //Human race should not change anything, so just leave all values as zero by breaking
                 break;
                 case ELF:
                 //Elves should get improved wisdom and initiative at the cost of strength and constitution
-                attributes[0] =  -3; //Strength -3
-                attributes[1] =  3; //Wisdom +3
-                attributes[2] =  -2; //Constitution -2;
-                attributes[3] =  2; // Initiative +2;
+                modifyAttributes(-3, 3, -2, 2);
+                //Strength -3
+                //Wisdom +3
+                //Constitution -2;
+                // Initiative +2;
                 break;
                 case ORC:
                 //Orcs should have increased strength and constitution at the cost of wisdom and initiative
-                attributes[0] =  3; //Strength +3
-                attributes[1] =  -2; //Wisdom -2
-                attributes[2] =  2; //Constitution 2;
-                attributes[3] =  -3; // Initiative -3;
+                modifyAttributes(3, -2, 2, -3);
+                //Strength +3
+                //Wisdom -2
+                //Constitution 2;
+                // Initiative -3;
                 break;
             }
-    
-            strength += attributes[0];
-            wisdom += attributes[1];
-            constitution += attributes[2];
-            initiative += attributes[3];
+
         }
     
     }
@@ -138,25 +136,24 @@ public class Character{
         public Class(String preset){
             if(preset == "MAGE"){
                 type = ClassType.MAGE;
-                setAttributes(5, 15, 5, 15);
+                modifyAttributes(5, 15, 5, 15);
             }
         }
 
         public Class(){
 
         }
-
-        /*This is currently here because I'm lazy, but this should be merged
-        with the modifyAttributes function and put in the Character class so both can use it*/
-        private void setAttributes(int str, int wis, int con, int ini){
-            strength += str;
-            wisdom += wis;
-            constitution += con;
-            initiative += ini;
-        }
-
         
     }
+
+    //Function for modifying attributes
+    public void modifyAttributes(int str, int wis, int con, int ini){
+        strength += str;
+        wisdom += wis;
+        constitution += con;
+        initiative += ini;
+    }
+
 
     //Display character data
     public void displayCharacterData(){
