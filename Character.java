@@ -146,6 +146,8 @@ public class Character{
 
         }
 
+        /*This is currently here because I'm lazy, but this should be merged
+        with the modifyAttributes function and put in the Character class so both can use it*/
         private void setAttributes(int str, int wis, int con, int ini){
             strength += str;
             wisdom += wis;
