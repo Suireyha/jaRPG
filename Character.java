@@ -48,7 +48,7 @@ public class Character{
         public Race(String preset){
             //If this function was called with a race in mind
             setRace(preset, true); //Yes, I'm aware that this statement will resolve to a true/false value. It doesn't matter. 
-            modifyAttribute();
+            raceAttribute();
         }
     
         public Race(){
@@ -60,7 +60,7 @@ public class Character{
                 String uInput = Main.cin();
                 invalid = setRace(uInput, false);
             }
-            modifyAttribute();
+            raceAttribute();
         }
     
         public void displayRace(Character caller, String race){
@@ -95,7 +95,7 @@ public class Character{
             return valid;
         }
     
-        private void modifyAttribute(){
+        private void raceAttribute(){
             switch(type){
                 case HUMAN:
                 //Human race should not change anything, so just leave all values as zero by breaking
