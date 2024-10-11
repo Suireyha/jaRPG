@@ -32,7 +32,36 @@ public class Character{
     }
 
     public Character(){
-        //name = setName
+        boolean invalid = true;
+        while(invalid){
+            System.out.print("Name your Character:\t");
+            String temp = Main.cin();
+
+            boolean onlyWhiteSpace = true; //Tracks if the user input is only whitespace
+            
+
+            for(int i = 0; i <  temp.length(); i++){
+                //Makes sure there's at least one character
+                if(temp.charAt(i) != ' '){
+                    onlyWhiteSpace = false;
+                };
+            }
+
+ 
+            if(temp.length() < 2 || onlyWhiteSpace || temp.length() > 20){
+                //Error message for user
+                System.out.println("Character name must be between 2 and 20 symbol and can't be whitespace only");
+                invalid = true;
+            }
+
+            else{
+                //Valid -> leave loop
+                name = temp;
+                invalid = false;
+            }
+
+        }
+        
         charRace = new Race();
         charClass = new Class();
     }
@@ -58,7 +87,7 @@ public class Character{
             while(invalid){
                 System.out.println("Please select a race (HUMAN, ELF, ORC)");
                 String uInput = Main.cin();
-                invalid = setRace(uInput, false);
+                invalid = !setRace(uInput, false);
             }
             //After a valid race has been chosen, asign the character attributes for that respective race
             raceAttribute();
@@ -142,7 +171,7 @@ public class Character{
             while(invalid){
                 System.out.println("Please select a class (BARBARIAN, FIGHTER, MAGE, ASSASSIN)");
                 String uInput = Main.cin();
-                invalid = setClass(uInput, false);
+                invalid = !setClass(uInput, false);
             }
             //After a valid class has been chosen, asign the character attributes for that class
             classAttribute();
