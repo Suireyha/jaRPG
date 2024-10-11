@@ -1,11 +1,11 @@
 public class Preset{
     String name;
     String race;
-    String pClass;
+    String pClass; //couldn't call this just class for obvious reasons :()
 
-    public Preset(String exName, String exRace, String exClass){
-        name = exName;
-        race = exRace;
-        pClass = exClass;
+    public Preset(String preName, String preRace, String preClass){
+        name = preName;
+        race = preRace;
+        pClass = preClass;
     }
 }
