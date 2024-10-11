@@ -47,9 +47,10 @@ public class Main{
         */
         
         //Launch sequence
+        System.out.println(" ");
         System.out.println("Welcome to jaRPG! Currently only developed by Marvin Kelly,\n" + 
         "but in theory Caleb Chew, RJ and Kong will work on this soon.\n" + 
-        "To get started, here are a couple useful commands:\n");
+        "To get started, here are a couple usefulcommands:\n");
         help();
         
 
