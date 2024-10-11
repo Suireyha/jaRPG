@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Character{
     //Character's Name, Race and Class (by which I mean in-game class not class object :3)
     String name;
@@ -16,12 +18,18 @@ public class Character{
     }
 
 
+
+
     //Character Attributes
     public int strength = 0; //Used for non-magical combat rolls
-    //public int intelligence = 0; //No use as of now
     public int wisdom = 0; //Used for magical combat rolls
     public int constitution = 0; //Used to determine HP
     public int initiative = 0; //Used to determine turns
+
+
+    //Character stats
+    public double health = constitution * 1.5;
+
 
 
     public Character(Preset preset){
@@ -254,6 +262,11 @@ public class Character{
         }
         
     }
+
+    public class Inventory{
+        ArrayList<Item> items = new ArrayList<Item>();
+    }
+
 
     //Function for modifying attributes
     public void modifyAttributes(int str, int wis, int con, int ini){
