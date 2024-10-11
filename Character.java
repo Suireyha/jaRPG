@@ -293,10 +293,66 @@ public class Character{
                 break;
             }
 
+            sort();
+
+        }
+
+        public void sort(){
+            ArrayList<Item> temp = new ArrayList<Item>();
+
+            for(int i = 0; i < items.size(); i++){
+                if(items.get(i).type == Item.Type.MELEE){
+                    temp.add(items.get(i));
+                }
+            }
+            for(int i = 0; i < items.size(); i++){
+                if(items.get(i).type == Item.Type.RANGED){
+                    temp.add(items.get(i));
+                }
+            }
+            for(int i = 0; i < items.size(); i++){
+                if(items.get(i).type == Item.Type.EQUIPABLE){
+                    temp.add(items.get(i));
+                }
+            }
+            for(int i = 0; i < items.size(); i++){
+                if(items.get(i).type == Item.Type.POTION){
+                    temp.add(items.get(i));
+                }
+            }
+
+            items = temp;
         }
 
         public void display(){
+            sort();
+            System.out.println("-------------INVENTORY SHEET-------------");
+            System.out.println("|                                       |");
+            System.out.println("|           " + name + "'s Items             |");
+            System.out.println("|                                       |");
+            System.out.println("|----------------WEAPONS----------------|");
+            displaySection(Item.Type.MELEE);
+            displaySection(Item.Type.RANGED);
+            System.out.println("|                                       |");
+            System.out.println("|----------------ARMOUR-----------------|");
+            System.out.println("|                                       |");
+            displaySection(Item.Type.EQUIPABLE);
+            System.out.println("|                                       |");
+            System.out.println("|----------------POTIONS----------------|");
+            System.out.println("|                                       |");
+            displaySection(Item.Type.POTION);
+            System.out.println("|                                       |");
+            System.out.println("-----------------------------------------");
+        }
 
+        public void displaySection(Item.Type section){
+            for(int i = 0; i < items.size(); i++){
+                if(items.get(i).type == section){
+                    System.out.println("|                                       |");
+                    System.out.println("|             " + items.get(i).name + "             |");
+                    System.out.println("| " + items.get(i).description + " |");
+                }
+            }
         }
 
         public void addItem(Item item){

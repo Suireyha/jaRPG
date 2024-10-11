@@ -106,19 +106,26 @@ public class Main{
                         }
 
                         else{
-                            if(checkForCharacters(party)){
-
+                            //Gives an error message if the reason is because there are no characters
+                            if(checkForCharacters(party));
+                            else{
+                                System.out.println("Invalid selection!");
                             }
-                            System.out.println("Invalid selection!");
+                            
                         }
                     }
                 
 
                 break;
                 case "SHOW INV":
-
+                    if(checkForCharacters(party)){
+                        party.get(selected).charInventory.display();
+                    }
                 break;
                 case "SHOW STATS":
+                    if(checkForCharacters(party)){
+                        party.get(selected).displayCharacterData();
+                    }
                 break;
                 case "QUIT":
                     playing = false;
