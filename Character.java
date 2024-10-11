@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Character{
     //Character's Name, Race and Class (by which I mean in-game class not class object :3)
@@ -265,6 +266,23 @@ public class Character{
 
     public class Inventory{
         ArrayList<Item> items = new ArrayList<Item>();
+
+        public void Inventory(){
+            //This function should give starting equipment based on their class
+            items = new ArrayList<Item>(); //Build list
+
+            switch(charClass.type){
+
+                case BARBARIAN:
+                items.addAll(0, Main.steelSword, Main.ragsArmor, Main.ragePotion);
+                break;
+            }
+
+
+
+        }
+
+
     }
 
 
