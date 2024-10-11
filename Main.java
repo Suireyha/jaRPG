@@ -51,6 +51,7 @@ public class Main{
         System.out.println("Welcome to jaRPG! Currently only developed by Marvin Kelly,\n" + 
         "but in theory Caleb Chew, RJ and Kong will work on this soon.\n" + 
         "To get started, here are a couple usefulcommands:\n");
+        System.out.println(" ");
         help();
         
 
@@ -128,6 +129,13 @@ public class Main{
                         party.get(selected).displayCharacterData();
                     }
                 break;
+                case "EQUIP":
+                    if(checkForCharacters(party)){
+                        System.out.println("What do you want to equip?");
+
+                        party.get(selected).charInventory.equip();
+                    }
+                break;
                 case "QUIT":
                     playing = false;
                 break;
@@ -144,6 +152,7 @@ public class Main{
         "SELECT -> allows you to select a character\n" +
         "SHOW INV -> displays the inventory of the selected character\n" +
         "SHOW STATS -> displays the character sheet of the selected character\n" +
+        "EQUIP -> equips an item from your inventory\n" +
         "QUIT -> ends program\n");
     }
 

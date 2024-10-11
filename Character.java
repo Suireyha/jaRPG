@@ -76,6 +76,9 @@ public class Character{
         charRace = new Race();
         charClass = new Class();
         charInventory = new Inventory();
+        System.out.println("");
+        System.out.println(name + " the " + charClass.type + " joins the party!");
+        System.out.println("");
     }
 
 
@@ -269,6 +272,8 @@ public class Character{
 
     public class Inventory{
         ArrayList<Item> items = new ArrayList<Item>();
+        Item equippedWeapon;
+        Item equippedArmour;
 
         public Inventory(){
             //This function should give starting equipment based on their class
@@ -294,6 +299,50 @@ public class Character{
             }
 
             sort();
+
+        }
+
+        public void equip(){
+            int highestIndex = 0;
+            int uInput = 0;
+            sort();
+            for(int i = 0; i < items.size(); i++){
+                if(items.get(i).type == Item.Type.MELEE || items.get(i).type == Item.Type.RANGED || items.get(i).type == Item.Type.EQUIPABLE){
+                    System.out.println("( " + items.get(i).name + " = " + (i + 1) + " )");
+                    highestIndex = i + 1;
+                }
+            }
+            
+            boolean invalid = true;
+            while(invalid){
+                uInput = Integer.valueOf(Main.cin());
+                if(uInput < 1 || uInput > highestIndex){
+                    System.out.println("Invalid item number!");
+                }
+                else{
+                    uInput--; //This just makes sure that it follows the same 1, 2, ... format of the prompt
+                    invalid = false;
+                }
+            }
+
+            switch(items.get(uInput).type){
+                case MELEE:
+                    //No break here so that ranged and melee weapons just equip to weapon slot
+                case RANGED:
+                    equippedWeapon = items.get(uInput);
+                    System.out.println(name + " equipped their " + equippedWeapon.name);
+                break;
+                case EQUIPABLE:
+                    equippedArmour = items.get(uInput);
+                    System.out.println(name + " put on their " + equippedArmour.name);
+                break;
+                default:
+                    System.out.println("ERROR: EQUIP BUG - CHECK equip() METHOD IN INVENTORY");
+                break;
+
+            }
+            
+            
 
         }
 
