@@ -46,7 +46,7 @@ public class Character{
         RaceType type;
     
         public Race(String preset){
-            //If this function was called with a race in mind
+            //This function was called with a race in mind
             setRace(preset, true); //Yes, I'm aware that this statement will resolve to a true/false value. It doesn't matter. 
             raceAttribute();
         }
@@ -60,16 +60,13 @@ public class Character{
                 String uInput = Main.cin();
                 invalid = setRace(uInput, false);
             }
+            //After a valid race has been chosen, asign the character attributes for that respective race
             raceAttribute();
         }
     
-        public void displayRace(Character caller, String race){
-            System.out.println(caller.name + " is " + caller.charRace.type);
-        }
-    
-        private boolean setRace(String uInput, boolean systemCall){
+        private boolean setRace(String input, boolean systemCall){
             boolean valid = false;
-            switch(uInput){
+            switch(input){
                 case "HUMAN":
                     type = RaceType.HUMAN;
                     valid = !valid; //Valid is true, since HUMAN is a valid Race
@@ -85,7 +82,7 @@ public class Character{
                 default:
                 //We got an error while generating a character without user input
                 if (systemCall){
-                    System.out.println("ERROR: PASSED INVALID ARGUMENT TO"); //One of us has made a mistake if we ever see this
+                    System.out.println("ERROR: PASSED INVALID ARGUMENT TO setRace()!!"); //One of us has made a mistake if we ever see this
                 }
                 else{
                     System.out.println("Select valid race (spelling/capitalisation must match examples!)"); //User passed an invalid string argument for their race
@@ -134,14 +131,97 @@ public class Character{
         // NOTE: THIS CLASS IS UNFINISHED!!!!! IT IS UNSTABLE
 
         public Class(String preset){
-            if(preset == "MAGE"){
-                type = ClassType.MAGE;
-                modifyAttributes(5, 15, 5, 15);
-            }
+            //Use this function when building a character from a preset
+            setClass(preset, true);
+            classAttribute();
         }
 
         public Class(){
 
+            boolean invalid = true;
+            while(invalid){
+                System.out.println("Please select a class (BARBARIAN, FIGHTER, MAGE, ASSASSIN)");
+                String uInput = Main.cin();
+                invalid = setClass(uInput, false);
+            }
+            //After a valid class has been chosen, asign the character attributes for that class
+            classAttribute();
+
+        }
+
+        private boolean setClass(String input, boolean systemCall){
+            boolean valid = false;
+            switch(input){
+                case "BARBARIAN":
+                    type = ClassType.BARBARIAN;
+                    valid = !valid;
+                    break;
+                case "FIGHTER":
+                    type = ClassType.FIGHTER;
+                    valid = !valid;
+                    break;
+                case "MAGE":
+                    type = ClassType.MAGE;
+                    valid = !valid;
+                    break;
+                case "ASSASSIN":
+                    type = ClassType.ASSASSIN;
+                    valid = !valid;
+                    break;
+                default:
+                
+                if (systemCall){
+                    System.out.println("ERROR: PASSED INVALID ARGUMENT TO setClass()!!"); //One of us has made a mistake if we ever see this
+                }
+                else{
+                    System.out.println("Select valid class (spelling/capitalisation must match examples!)"); //User passed an invalid string argument for their race
+                }
+                break;
+            }
+
+            return valid;
+
+        }
+
+        private void classAttribute(){
+            //NOTE: ALL DEFAULT CLASS ATTRIBUTES SHOULD AMOUNT TO 40!!
+            switch(type){
+                case BARBARIAN:
+                    //Barbarians should be heavy hitting tanks, but are slow and dumb
+                    modifyAttributes(15, 5, 15, 5);
+                    //Strength = 15;
+                    //Wisdom = 5;
+                    //Constitution = 15;
+                    // Initiative = 5;
+                    break;
+                case FIGHTER:
+                    //Fighters should be good melee focused all-rounders
+                    modifyAttributes(12, 7, 10, 10);
+                    //Strength = 12;
+                    //Wisdom = 7;
+                    //Constitution = 10;
+                    // Initiative = 10;
+                    
+                    break;
+                case MAGE:
+                    //Mages/Wizards should be ranged class cannons
+                    modifyAttributes(6, 15, 6, 13);
+                    //Strength = 6;
+                    //Wisdom = 15;
+                    //Constitution = 6;
+                    // Initiative = 13;
+                    break;
+                case ASSASSIN:
+                    //Assassin's should have some spell capacity, decent melee output and great speed
+                    modifyAttributes(11, 8, 5, 16);
+                    //Strength = 11;
+                    //Wisdom = 8;
+                    //Constitution = 5;
+                    // Initiative = 16;
+                    break;
+                
+
+            }
         }
         
     }
