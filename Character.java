@@ -435,23 +435,51 @@ public class Character{
 
 
     //Display character data
-    public void displayCharacterData(){
-        System.out.println("-------------CHARACTER SHEET-------------");
-        System.out.println("|                                       |");
-        System.out.println("|    Name: " + name + "                      |");
-        System.out.println("|    Class: " + charClass.type + "                        |");
-        System.out.println("|    Race: " + charRace.type + "                          |");
-        System.out.println("|                                       |");
-        System.out.println("|               ATTRIBUTES              |");
-        System.out.println("|                                       |");
-        System.out.println("|    Strength: " + strength + "                        |");
-        System.out.println("|    Wisdom: " + wisdom + "                         |");
-        System.out.println("|    Constitution: " + constitution + "                    |");
-        System.out.println("|    Initiative: " + initiative + "                     |");
-        System.out.println("|                                       |");
-        System.out.println("-----------------------------------------");
+     public void displayCharacterData() {
+    
+        String nameLine = "Name: " + name;
+        String classLine = "Class: " + charClass.type;
+        String raceLine = "Race: " + charRace.type;
+        String strengthLine = "Strength: " + strength;
+        String wisdomLine = "Wisdom: " + wisdom;
+        String constitutionLine = "Constitution: " + constitution;
+        String initiativeLine = "Initiative: " + initiative;
+    
+      
+        int maxContentLength = Math.max(Math.max(nameLine.length(), classLine.length()), 
+                                        Math.max(raceLine.length(), Math.max(strengthLine.length(), 
+                                        Math.max(wisdomLine.length(), 
+                                        Math.max(constitutionLine.length(), initiativeLine.length())))));
+        
+        
+        int boxWidth = maxContentLength + 4;
+        String border = "-".repeat(boxWidth);
+        System.out.println(border);
+        System.out.println("|" + " ".repeat(boxWidth - 2) + "|");
+        System.out.println("| " + padRight(nameLine, boxWidth - 3) + "|");
+        System.out.println("| " + padRight(classLine, boxWidth - 3) + "|");
+        System.out.println("| " + padRight(raceLine, boxWidth - 3) + "|");
+        System.out.println("|" + " ".repeat(boxWidth - 2) + "|");
+        System.out.println("| " + padRight("ATTRIBUTES", boxWidth - 3) + "|");
+        System.out.println("|" + " ".repeat(boxWidth - 2) + "|");
+        System.out.println("| " + padRight(strengthLine, boxWidth - 3) + "|");
+        System.out.println("| " + padRight(wisdomLine, boxWidth - 3) + "|");
+        System.out.println("| " + padRight(constitutionLine, boxWidth - 3) + "|");
+        System.out.println("| " + padRight(initiativeLine, boxWidth - 3) + "|");
+        System.out.println("|" + " ".repeat(boxWidth - 2) + "|");
+        System.out.println(border);
+
         System.out.println("");
         System.out.println("");
+    }
+    
+    // Helper method to pad the string to the right with spaces
+    private String padRight(String str, int length) {
+        if (str.length() < length) {
+            return str + " ".repeat(length - str.length());
+        } else {
+            return str;
+        }
     }
 
 }
