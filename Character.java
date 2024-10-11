@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Arrays;
 
 public class Character{
@@ -293,6 +292,10 @@ public class Character{
                 items.addAll(Arrays.asList(Main.shankDagger, Main.leatherArmor, Main.healthPotion));
                 break;
             }
+
+        }
+
+        public void display(){
 
         }
 

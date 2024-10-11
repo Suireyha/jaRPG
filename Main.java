@@ -1,6 +1,7 @@
 import java.util.Scanner;  //Import Scanner object for reading user input
 import java.util.ArrayList; //Import ArrayList
 import java.util.Collection;
+import java.util.Arrays; //For addAll();
 
 
 
@@ -29,30 +30,122 @@ public class Main{
     
 
     public static void main(String[] args){
+        //Maximum of 3 players that the player can use
+        ArrayList<Character> party = new ArrayList();
+        Character player1;
+        Character player2;
+        Character player3;
+        //Counts the number of characters that can be selected at the moment
+        int characters = 0;
+        int selected = 0;
+
+        
         /*
         Preset pre = new Preset("Phil Tok", "HUMAN", "BARBARIAN");
-        Preset pre2 = new Preset("Orculus", "ORC", "MAGE");
-        
-        
-        Character xo = new Character(pre);
+        Character phil = new Character(pre);
         xo.displayCharacterData();
-        
-
-        Character xx = new Character(pre2);
-        xx.displayCharacterData();
         */
         
+        //Launch sequence
+        System.out.println("Welcome to jaRPG! Currently only developed by Marvin Kelly,\n" + 
+        "but in theory Caleb Chew, RJ and Kong will work on this soon.\n" + 
+        "To get started, here are a couple useful commands:\n");
+        help();
+        
 
-        Character player1 = new Character();
-        player1.displayCharacterData();
+        //Game Loop
+        boolean playing = true;
+        while(playing){
+            String uInput;
+            uInput = cin();
 
-        System.out.println(" ");
-        System.out.println(" ");
-        System.out.println(player1.charInventory.items.get(0).name);
-        System.out.println(player1.charInventory.items.get(1).name);
-        System.out.println(player1.charInventory.items.get(2).name);
-        //Note that since the Character class is unfinished, these are all unstable and own't work if Class != MAGE
+            switch(uInput){
+                case "HELP":
+                    help();
+                break;
+                case "CREATE":
+                    switch(characters){
+                        case 0:
+                        player1 = new Character();
+                        party.add(player1);
+                        characters++;
+                        break;
+                        case 1:
+                        player2 = new Character();
+                        party.add(player2);
+                        characters++;
+                        break;
+                        case 2:
+                        player3 = new Character();
+                        party.add(player3);
+                        characters++;
+                        break;
+                        default:
+                        System.out.println("You already have 3 players!!");
+                        break;
+                    }
+                break;
+                case "SELECT":
+                    int selection;
+                    boolean invalid = true;
+                    while(invalid){
 
+                        System.out.println("Who do you want to select?");
+
+                        //Displays all of the avaliable characters to select
+                        for(int i = 0; i < characters; i++){
+                            System.out.println("( " + party.get(i).name + " = " + (i + 1) + ")");
+                        }
+                        selection = Integer.valueOf(cin());
+
+                        //Checks if selction if valid, loops if not
+                        if(selection > 0 && selection <= characters){
+                            selected = selection - 1;
+                            System.out.println(party.get(selected).name + " is selected");
+                            invalid = false;
+                        }
+
+                        else{
+                            if(checkForCharacters(party)){
+
+                            }
+                            System.out.println("Invalid selection!");
+                        }
+                    }
+                
+
+                break;
+                case "SHOW INV":
+
+                break;
+                case "SHOW STATS":
+                break;
+                case "QUIT":
+                    playing = false;
+                break;
+                    
+            }
+
+        }
+
+    }
+
+    static public void help(){
+        System.out.println("HELP -> shows this list again\n" +
+        "CREATE -> starts the character creator (you should use this now)\n" +
+        "SELECT -> allows you to select a character\n" +
+        "SHOW INV -> displays the inventory of the selected character\n" +
+        "SHOW STATS -> displays the character sheet of the selected character\n" +
+        "QUIT -> ends program\n");
+    }
+
+    public static boolean checkForCharacters(ArrayList<Character> party){
+        //If there are no Characters, return false
+        if(party.size() < 1){
+            System.out.println("There are no characters!");
+            return false;
+        }
+        return true;
     }
 
     public static String cin(){
