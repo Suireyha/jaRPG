@@ -52,10 +52,8 @@ public class Item{
         type = itemType;
         name = itemName;
         description = itemDescription;
-        strength = str;
-        wisdom = wis;
-        constitution = con;
-        initiative = ini;
+        healMod = hp;
+        damageMod = dmg;
     }
     
 }

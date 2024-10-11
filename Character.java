@@ -1,11 +1,14 @@
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Arrays;
 
 public class Character{
     //Character's Name, Race and Class (by which I mean in-game class not class object :3)
-    String name;
+    String name; //This one is not called charName because it's not an class. player1.name gives the name of the player, player1.charRace.name gives the name of the race. 
     Race charRace;
     Class charClass;
+    Inventory charInventory;
+
     enum RaceType{
         HUMAN,
         ELF,
@@ -73,6 +76,7 @@ public class Character{
         
         charRace = new Race();
         charClass = new Class();
+        charInventory = new Inventory();
     }
 
 
@@ -267,19 +271,46 @@ public class Character{
     public class Inventory{
         ArrayList<Item> items = new ArrayList<Item>();
 
-        public void Inventory(){
+        public Inventory(){
             //This function should give starting equipment based on their class
             items = new ArrayList<Item>(); //Build list
 
             switch(charClass.type){
-
                 case BARBARIAN:
-                items.addAll(0, Main.steelSword, Main.ragsArmor, Main.ragePotion);
+                //Barbarians start with a wooden sword, rags and a rage potion
+                items.addAll(Arrays.asList(Main.woodSword, Main.ragsArmor, Main.ragePotion));
+                break;
+                case FIGHTER:
+                //Fighters start with a wooden sword, rags and a rage potion
+                items.addAll(Arrays.asList(Main.woodSword, Main.leatherArmor, Main.healthPotion));
+                break;
+                case MAGE:
+                //Mages start with a wooden staff, rags and a health potion
+                items.addAll(Arrays.asList(Main.woodStaff, Main.ragsArmor, Main.healthPotion));
+                break;
+                case ASSASSIN:
+                //Assassins start with a shank, leather armour and a health potion
+                items.addAll(Arrays.asList(Main.shankDagger, Main.leatherArmor, Main.healthPotion));
                 break;
             }
 
+        }
 
+        public void addItem(Item item){
+            //Add an item to player inventory
+            items.add(item);
+        }
 
+        public void removeItem(Item item){
+            //This function will delete the LAST insance of a certain item in an inventory
+            //If the player has 3 health potions for example, this will remove the last 1 added
+            int index = 0;
+            for(int i = 0; i < items.size(); i++){
+                if(items.get(i) == item){
+                    index = i;
+                }
+            }
+            items.remove(index);
         }
 
 
