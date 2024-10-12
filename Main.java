@@ -158,12 +158,12 @@ public class Main{
 
                 break;
                 case "SHOW INV":
-                    if(checkForCharacters(party)){
+                    if(checkForCharacters(allEntities)){
                         allEntities.get(selected).charInventory.display();
                     }
                 break;
                 case "SHOW STATS":
-                    if(checkForCharacters(party)){
+                    if(checkForCharacters(allEntities)){
                         allEntities.get(selected).displayCharacterData();
                     }
                 break;
@@ -193,6 +193,10 @@ public class Main{
                      */
                 }
                 break;
+                case "ATTACK":
+                break;
+                case "USE":
+                break;
                 case "QUIT":
                     playing = false;
                 break;
@@ -211,7 +215,9 @@ public class Main{
         "SHOW INV -> displays the inventory of the selected character\n" +
         "SHOW STATS -> displays the character sheet of the selected character\n" +
         "EQUIP -> equips an item from your inventory\n" +
-        "START -> starts combat!\n" +
+        "START -> starts combat\n" +
+        "ATTACK -> the character in turn can attack an enemy\n" +
+        "USE -> allows you to use an item from your inventory\n" +
         "QUIT -> ends program\n" +
         "\n");
     }

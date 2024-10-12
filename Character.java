@@ -32,7 +32,9 @@ public class Character{
 
 
     //Character stats
-    public double health = constitution * 1.5;
+    boolean firstHealth = true; //Tracks if the health has been initially set for setHealth() function
+    public double maxHealth = 0;
+    public double health = 0;
 
 
 
@@ -324,6 +326,8 @@ public class Character{
             int highestIndex = 0;
             int uInput = 0;
             sort();
+
+
             for(int i = 0; i < items.size(); i++){
                 if(items.get(i).type == Item.Type.MELEE || items.get(i).type == Item.Type.RANGED || items.get(i).type == Item.Type.EQUIPABLE){
                     System.out.println("( " + items.get(i).name + " = " + (i + 1) + " )");
@@ -347,12 +351,20 @@ public class Character{
                 case MELEE:
                     //No break here so that ranged and melee weapons just equip to weapon slot
                 case RANGED:
+                    if(equippedWeapon != null){
+                        modifyAttributes(-1*equippedWeapon.strength, -1*equippedWeapon.wisdom, -1*equippedWeapon.constitution, -1*equippedWeapon.initiative); //Remove old weapon stats
+                    }
                     equippedWeapon = items.get(uInput);
                     System.out.println(name + " equipped their " + equippedWeapon.name);
+                    modifyAttributes(equippedWeapon.strength, equippedWeapon.wisdom, equippedWeapon.constitution, equippedWeapon.initiative); //Add new weapon stats
                 break;
                 case EQUIPABLE:
+                    if(equippedArmour != null){
+                        modifyAttributes(-1*equippedArmour.strength, -1*equippedArmour.wisdom, -1*equippedArmour.constitution, -1*equippedArmour.initiative); //Remove old armour stats
+                    }
                     equippedArmour = items.get(uInput);
                     System.out.println(name + " put on their " + equippedArmour.name);
+                    modifyAttributes(equippedArmour.strength, equippedArmour.wisdom, equippedArmour.constitution, equippedArmour.initiative); //Add new armour stats
                 break;
                 default:
                     System.out.println("ERROR: EQUIP BUG - CHECK equip() METHOD IN INVENTORY");
@@ -458,6 +470,7 @@ public class Character{
         String nameLine = "Name: " + name;
         String classLine = "Class: " + charClass.type;
         String raceLine = "Race: " + charRace.type;
+        String healthLine = "Health: " + health;
         String strengthLine = "Strength: " + strength;
         String wisdomLine = "Wisdom: " + wisdom;
         String constitutionLine = "Constitution: " + constitution;
@@ -465,9 +478,10 @@ public class Character{
     
       
         int maxContentLength = Math.max(Math.max(nameLine.length(), classLine.length()), 
-        /*         All of this               |*/Math.max(raceLine.length(), Math.max(strengthLine.length(), 
-        /*          is just the maths for    \*/Math.max(wisdomLine.length(), 
-        /*           the initialisation       \*/Math.max(constitutionLine.length(), initiativeLine.length())))));
+        /*         All of this               |*/Math.max(raceLine.length(), Math.max(healthLine.length(),
+        /*          is just the maths for    \*/Math.max(strengthLine.length(), 
+        /*          the initialisation       \*/Math.max(wisdomLine.length(), 
+        /*                                   \*/Math.max(constitutionLine.length(), initiativeLine.length()))))));
         
         
         int boxWidth = maxContentLength + 4;
@@ -477,6 +491,7 @@ public class Character{
         System.out.println("| " + padRight(nameLine, boxWidth - 3) + "|");
         System.out.println("| " + padRight(classLine, boxWidth - 3) + "|");
         System.out.println("| " + padRight(raceLine, boxWidth - 3) + "|");
+        System.out.println("| " + padRight(healthLine, boxWidth - 3) + "|");
         System.out.println("|" + " ".repeat(boxWidth - 2) + "|");
         System.out.println("| " + padRight("ATTRIBUTES", boxWidth - 3) + "|");
         System.out.println("|" + " ".repeat(boxWidth - 2) + "|");
@@ -498,6 +513,30 @@ public class Character{
         } else {
             return str;
         }
+    }
+
+    public void adjustHealth(int change){
+        health += change; //Add or remove health points
+        if(health > maxHealth){ //Don't let the player have more HP than their character's max
+            health = maxHealth;
+        }
+    }
+
+    public void setHealth(){
+        double max = constitution*1.5;
+        if(firstHealth){
+            //Set the health and max health of the character. This only happens when the character is created, otherwise else case is used
+            health = max;
+            maxHealth = max;
+            firstHealth = false;
+        }
+        else{
+            //Asjust their new health so that they don't heal to their new max HP
+            double missingHealth = health/maxHealth;
+            maxHealth = max;
+            health = missingHealth*maxHealth;
+        }
+
     }
 
 }
