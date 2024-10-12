@@ -36,7 +36,7 @@ public class Item{
 
     //Consumable Stats
     int healMod; //Mod means Modifier
-    int damageMod;
+    boolean makesFurious;
 
     public Item(Type itemType, String itemName, String itemDescription, int str, int wis, int con, int ini){
         type = itemType;
@@ -48,12 +48,12 @@ public class Item{
         initiative = ini;
     }
 
-    public Item(Type itemType, String itemName, String itemDescription, int hp, int dmg){
+    public Item(Type itemType, String itemName, String itemDescription, int hp, boolean isRage){
         type = itemType;
         name = itemName;
         description = itemDescription;
         healMod = hp;
-        damageMod = dmg;
+        makesFurious = isRage;
     }
     
 }

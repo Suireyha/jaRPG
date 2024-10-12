@@ -25,8 +25,8 @@ public class Main{
     static Item leatherArmor = new Item(Item.Type.EQUIPABLE, "Leather Armor", "A simple set of armour, made of leather. (+1 Constutution)", 0, 0, 1, 0);
 
     //Potions
-    static Item healthPotion = new Item(Item.Type.POTION, "Potion of Health", "A potion of red fluid. (Recovers 5 HP)", 5, 0);
-    static Item ragePotion = new Item(Item.Type.POTION, "Potion of Rage", "It glows a pulsing orange..? (Next Attack does +5 DMG)", 0, 5);
+    static Item healthPotion = new Item(Item.Type.POTION, "Potion of Health", "A potion of red fluid. (Recovers 5 HP)", 5, false);
+    static Item ragePotion = new Item(Item.Type.POTION, "Potion of Rage", "It glows a pulsing orange..? (Next Attack does +5 DMG)", 0, true);
     
 
 
@@ -174,7 +174,7 @@ public class Main{
                     else if(checkForCharacters(party)){ //This action should only be performable for playable characters, check if it's a player
                         System.out.println("What do you want to equip?");
 
-                        allEntities.get(selected).charInventory.equip();
+                        party.get(selected).charInventory.equip();
                     }
                 break;
                 case "START":
@@ -182,20 +182,17 @@ public class Main{
                     fighting = true;
                     characters += 3;
                     loadTestScenario(enemies, allEntities, enemy1, enemy2, enemy3);
-                    
-                    /*
-                    for(int i = 0; i < party.size(); i++){
-                        allEntities.add(party.get(i));
-                    }
-                    for(int i = 0; i < enemies.size(); i++){
-                        allEntities.add(enemies.get(i));
-                    }
-                     */
                 }
                 break;
                 case "ATTACK":
                 break;
                 case "USE":
+                if(!getSelectedCharacterType(allEntities.get(selected))){
+                    System.out.println("Enemy is currently selected!");
+                }
+                else if(checkForCharacters(party)){
+                    party.get(selected).charInventory.usePotion();
+                }
                 break;
                 case "QUIT":
                     playing = false;

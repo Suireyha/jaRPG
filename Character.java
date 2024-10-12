@@ -21,9 +21,6 @@ public class Character{
         ASSASSIN
     }
 
-
-
-
     //Character Attributes
     public int strength = 0; //Used for non-magical combat rolls
     public int wisdom = 0; //Used for magical combat rolls
@@ -35,6 +32,7 @@ public class Character{
     boolean firstHealth = true; //Tracks if the health has been initially set for setHealth() function
     public double maxHealth = 0;
     public double health = 0;
+    boolean furious = false; //Deals + 5 damage (mainly for rage potions)
 
 
 
@@ -56,6 +54,7 @@ public class Character{
             System.out.println(name + " the " + charClass.type + " appears! They don't look happy...");
             System.out.println("");       
         }
+        setHealth();
     }
 
     public Character(){
@@ -93,6 +92,7 @@ public class Character{
         charClass = new Class();
         charInventory = new Inventory();
         player = true;
+        setHealth();
         System.out.println("");
         System.out.println(name + " the " + charClass.type + " joins the party!");
         System.out.println("");
@@ -357,6 +357,7 @@ public class Character{
                     equippedWeapon = items.get(uInput);
                     System.out.println(name + " equipped their " + equippedWeapon.name);
                     modifyAttributes(equippedWeapon.strength, equippedWeapon.wisdom, equippedWeapon.constitution, equippedWeapon.initiative); //Add new weapon stats
+                    setHealth();
                 break;
                 case EQUIPABLE:
                     if(equippedArmour != null){
@@ -365,6 +366,7 @@ public class Character{
                     equippedArmour = items.get(uInput);
                     System.out.println(name + " put on their " + equippedArmour.name);
                     modifyAttributes(equippedArmour.strength, equippedArmour.wisdom, equippedArmour.constitution, equippedArmour.initiative); //Add new armour stats
+                    setHealth();
                 break;
                 default:
                     System.out.println("ERROR: EQUIP BUG - CHECK equip() METHOD IN INVENTORY");
@@ -378,7 +380,7 @@ public class Character{
 
         public void sort(){
             ArrayList<Item> temp = new ArrayList<Item>();
-
+            //If you guys want to edit this function, just be careful because when items are removed they become null. This accounts for that
             for(int i = 0; i < items.size(); i++){
                 if(items.get(i).type == Item.Type.MELEE){
                     temp.add(items.get(i));
@@ -432,6 +434,58 @@ public class Character{
                     System.out.println("| " + items.get(i).description + " |");
                 }
             }
+        }
+
+        public void usePotion(){
+            int numPotions = 0;
+            String uInput;
+            int uInputAsInt = 0;
+            ArrayList<Item> potions = new ArrayList<Item>();
+            for(int i = 0; i < items.size(); i++){
+                if(items.get(i).type == Item.Type.POTION){
+                    numPotions++;
+                    potions.add(items.get(i));
+                }
+            }
+            
+            if(potions.isEmpty()){
+                System.out.println("You have no potions!");
+            }
+            else if(numPotions > 0){
+                boolean invalid = true;
+                boolean firstLoop = true;
+                System.out.println("Which potion do you want to use? (CANCEL for none)");
+                for(int i = 0; i < potions.size(); i++){
+                    System.out.println("( " + potions.get(i).name + " = " + i + " )");
+                }
+                uInput = Main.cin().toUpperCase();
+                if(uInput == "CANCEL"){ //This whole part of the method is fucked, sorry guys :(
+                    invalid = false;
+                }
+                //I know that this means players can only cancel after calling and not after making an invalid choice but I cba to fix that right now
+                else{
+                    
+                    while(invalid){
+                        if(firstLoop){
+                            uInputAsInt = Integer.valueOf(uInput);
+                            firstLoop = false;
+                        }
+                        else{
+                        uInputAsInt = Integer.valueOf(Main.cin()) - 1;
+                        }
+                        if(uInputAsInt >= 0 && uInputAsInt < numPotions){
+                            adjustHealth(potions.get(uInputAsInt).healMod);
+                            furious =  potions.get(uInputAsInt).makesFurious;
+                            invalid = false;
+
+                            System.out.println(name + " used " + potions.get(uInputAsInt).name + "!");
+                            items.remove(potions.get(uInputAsInt));
+                            sort();
+                        }
+                    }
+                }
+            }
+
         }
 
         public void addItem(Item item){
