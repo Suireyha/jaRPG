@@ -29,15 +29,38 @@ public class Main{
     static Item ragePotion = new Item(Item.Type.POTION, "Potion of Rage", "It glows a pulsing orange..? (Next Attack does +5 DMG)", 0, 5);
     
 
+
+    //ENEMY/PLAYER PRESETS
+    static Preset pre1 = new Preset("Enemy Barbarian", "ORC", "BARBARIAN", false);
+    static Preset pre2 = new Preset("Enemy Mage", "ELF", "MAGE", false);
+    static Preset pre3 = new Preset("Enemy Figther", "HUMAN", "FIGHTER", false);
+
+    //PLAER PRESETS FOR TESTING
+    static Preset pre4 = new Preset("EJACULUS", "ELF", "MAGE", true);
+    static Preset pre5 = new Preset("GROGU", "ORC", "BARBARIAN", true);
+    static Preset pre6 = new Preset("CABLE", "HUMAN", "ASSASSIN", true);
+
     public static void main(String[] args){
-        //Maximum of 3 players that the player can use
+        //The players party- it's an array of with their characters
         ArrayList<Character> party = new ArrayList();
         Character player1;
         Character player2;
         Character player3;
+        //The enemy party- it's an array of enemy characters
+        ArrayList<Character> enemies = new ArrayList();
+        Character enemy1 = null;
+        Character enemy2 = null;
+        Character enemy3 = null;
+        //All characters stored here so that user can select anyone in combat;
+        ArrayList<Character> allEntities = new ArrayList();
         //Counts the number of characters that can be selected at the moment
         int characters = 0;
+        int numPlayers = 0;
+        int numEnemies = 0;
         int selected = 0;
+
+        //Player is in a fight
+        boolean fighting = false;
 
         
         /*
@@ -53,7 +76,14 @@ public class Main{
         "To get started, here are a couple usefulcommands:\n");
         System.out.println(" ");
         help();
-        
+        //If you're using presets for player characters, uncomment the next 6 liens:
+        player1= new Character(pre4);
+        player2= new Character(pre5);
+        player3= new Character(pre6);
+        party.addAll(Arrays.asList(player1, player2, player3));
+        allEntities.addAll(party);
+        characters += 3;
+
 
         //Game Loop
         boolean playing = true;
@@ -70,16 +100,19 @@ public class Main{
                         case 0:
                         player1 = new Character();
                         party.add(player1);
+                        allEntities.add(player1);
                         characters++;
                         break;
                         case 1:
                         player2 = new Character();
                         party.add(player2);
+                        allEntities.add(player2);
                         characters++;
                         break;
                         case 2:
                         player3 = new Character();
                         party.add(player3);
+                        allEntities.add(player3);
                         characters++;
                         break;
                         default:
@@ -88,6 +121,10 @@ public class Main{
                     }
                 break;
                 case "SELECT":
+                    if(allEntities.size() < 1){
+                        System.out.println("There are no characters! (use CREATE)");
+                        break;
+                    }
                     int selection;
                     boolean invalid = true;
                     while(invalid){
@@ -96,14 +133,14 @@ public class Main{
 
                         //Displays all of the avaliable characters to select
                         for(int i = 0; i < characters; i++){
-                            System.out.println("( " + party.get(i).name + " = " + (i + 1) + ")");
+                            System.out.println("( " + allEntities.get(i).name + " = " + (i + 1) + ")");
                         }
                         selection = Integer.valueOf(cin());
 
                         //Checks if selction if valid, loops if not
                         if(selection > 0 && selection <= characters){
                             selected = selection - 1;
-                            System.out.println(party.get(selected).name + " is selected");
+                            System.out.println(allEntities.get(selected).name + " is selected");
                             invalid = false;
                         }
 
@@ -121,20 +158,39 @@ public class Main{
                 break;
                 case "SHOW INV":
                     if(checkForCharacters(party)){
-                        party.get(selected).charInventory.display();
+                        allEntities.get(selected).charInventory.display();
                     }
                 break;
                 case "SHOW STATS":
                     if(checkForCharacters(party)){
-                        party.get(selected).displayCharacterData();
+                        allEntities.get(selected).displayCharacterData();
                     }
                 break;
                 case "EQUIP":
-                    if(checkForCharacters(party)){
+                    if(!getSelectedCharacterType(allEntities.get(selected))){
+                        System.out.println("Enemy is currently selected!");
+                    }
+                    else if(checkForCharacters(party)){ //This action should only be performable for playable characters, check if it's a player
                         System.out.println("What do you want to equip?");
 
-                        party.get(selected).charInventory.equip();
+                        allEntities.get(selected).charInventory.equip();
                     }
+                break;
+                case "START":
+                if(checkForCharacters(party)){
+                    fighting = true;
+                    characters += 3;
+                    loadTestScenario(enemies, allEntities, enemy1, enemy2, enemy3);
+                    
+                    /*
+                    for(int i = 0; i < party.size(); i++){
+                        allEntities.add(party.get(i));
+                    }
+                    for(int i = 0; i < enemies.size(); i++){
+                        allEntities.add(enemies.get(i));
+                    }
+                     */
+                }
                 break;
                 case "QUIT":
                     playing = false;
@@ -147,13 +203,16 @@ public class Main{
     }
 
     static public void help(){
-        System.out.println("HELP -> shows this list again\n" +
+        System.out.println("\n" +
+        "HELP -> shows this list again\n" +
         "CREATE -> starts the character creator (you should use this now)\n" +
         "SELECT -> allows you to select a character\n" +
         "SHOW INV -> displays the inventory of the selected character\n" +
         "SHOW STATS -> displays the character sheet of the selected character\n" +
         "EQUIP -> equips an item from your inventory\n" +
-        "QUIT -> ends program\n");
+        "START -> starts combat!\n" +
+        "QUIT -> ends program\n" +
+        "\n");
     }
 
     public static boolean checkForCharacters(ArrayList<Character> party){
@@ -172,4 +231,18 @@ public class Main{
         return uInput;
     }
 
+    public static void loadTestScenario(ArrayList<Character> enemyList, ArrayList<Character> allList, Character enemy1, Character enemy2, Character enemy3){
+        enemy1 = new Character(pre1);
+        enemy2 = new Character(pre2);
+        enemy3 = new Character(pre3);
+        enemyList.addAll(Arrays.asList(enemy1, enemy2, enemy3));
+        allList.addAll(enemyList);
+    }
+
+    public static boolean getSelectedCharacterType(Character selected){
+        if(selected.player){
+            return true;
+        }
+        return false;
+    }
 }

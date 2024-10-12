@@ -7,6 +7,7 @@ public class Character{
     Race charRace;
     Class charClass;
     Inventory charInventory;
+    boolean player = false; //This variable tracks if the character is an enemy or player
 
     enum RaceType{
         HUMAN,
@@ -40,6 +41,19 @@ public class Character{
         name = preset.name;
         charRace = new Race(preset.race);
         charClass = new Class(preset.pClass);
+        charInventory = new Inventory();
+        player = preset.player;
+
+        if(preset.player){
+            System.out.println("");
+            System.out.println(name + " the " + charClass.type + " joins the party!");
+            System.out.println("");
+        }
+        else{
+            System.out.println("");
+            System.out.println(name + " the " + charClass.type + " appears! They don't look happy...");
+            System.out.println("");       
+        }
     }
 
     public Character(){
@@ -76,9 +90,11 @@ public class Character{
         charRace = new Race();
         charClass = new Class();
         charInventory = new Inventory();
+        player = true;
         System.out.println("");
         System.out.println(name + " the " + charClass.type + " joins the party!");
         System.out.println("");
+
     }
 
 
