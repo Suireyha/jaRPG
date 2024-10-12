@@ -102,6 +102,7 @@ public class Character{
             while(invalid){
                 System.out.println("Please select a race (HUMAN, ELF, ORC)");
                 String uInput = Main.cin();
+                uInput = uInput.toUpperCase(); //Converts to uppercase so user doesn't have to
                 invalid = !setRace(uInput, false);
             }
             //After a valid race has been chosen, asign the character attributes for that respective race
@@ -186,6 +187,7 @@ public class Character{
             while(invalid){
                 System.out.println("Please select a class (BARBARIAN, FIGHTER, MAGE, ASSASSIN)");
                 String uInput = Main.cin();
+                uInput = uInput.toUpperCase(); //Converts to uppercase so user doesn't have to
                 invalid = !setClass(uInput, false);
             }
             //After a valid class has been chosen, asign the character attributes for that class

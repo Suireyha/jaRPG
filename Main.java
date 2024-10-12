@@ -60,7 +60,7 @@ public class Main{
         while(playing){
             String uInput;
             uInput = cin();
-
+            uInput = uInput.toUpperCase(); //This means that commands can be run without them having to be input as all uppercase by the user
             switch(uInput){
                 case "HELP":
                     help();
