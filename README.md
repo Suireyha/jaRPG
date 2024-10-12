@@ -6,13 +6,13 @@ Major Assignment for Comp1010, MQ University
 
 ## Project Outline:
 
-As for writing this, the goal for this project is to develop a text-based RPG where a Character can create a small party of Heros, each of which belongs to it's own class (Barbarian, Wizard, etc), it's own race (Elf, Dwarf, etc), has certain equiptment (Iron sword, wooden shield, etc) to battle a computer generated or pre-defined party (to be determined) in order to win.
+jaRPG is a terminal based RPG where the user can create their own party of heroes, each with their own class, weapons, armour, race etc. The user's party will face up against enemy parties in a FIGHT TO THE DEATH!!!! Upgrade your weapons and kill as many as you can.
 
-Actions- especially combat actions- will be determined as succesfull or unsiccesfull by a dice roll plus some modifier. Each action will have its own threshold that must be met in order for the action to be successful. For example, to attack a goblin with a sword, a dice roll of 10 might be required and thus if the user rolls 8 and has an attack modifier (likely strength in this case) of +3, they pass the check and attack the goblin since their total was 11, as 11 > 10.
+Combat actions are determined as succesfull or unsiccesfull by a dice roll plus some modifier. Each action will have its own threshold that must be met in order for the action to be successful. For example, to attack a goblin with a sword, a dice roll of 10 might be required and thus if the user rolls 8 and has an attack modifier (likely strength in this case) of +3, they pass the check and attack the goblin since their total was 11, as 11 > 10.
 
 For now, the player wins if their party can defeat the opponent party so as to not broaden the scope of this project too much initially.
 
-Players will interface with the game via the terminal, giving text commands for their actions.
+Players interface with the game via the terminal, giving text commands for their actions.
 
 ## Project 'Problem'
 
@@ -31,19 +31,26 @@ To be determined :)
 
 ## Project Roadmap (IMPORTANT!!)
 
-### Attribute System
-Along side characters, we need to build an Attribute System to calculate actions.
-
-### Character System
-Build the infrastructure to create characters with unique names, races, classes, attributes etc. Characters should be able to store, equip and use items (after they've been implemented). The Character System needs to be modular such that both player characters and non-player characters can be made with the same methods.
-
 ### Combat System
 Develop a system for actually playing through combat scenarios- making actions, getting hit, etc
 
-### Item System
-Build the infrastructure to create and use items. After this, we can add a few items.
-
 ### Win/Loss Handling
 Handle what happens if the player completes their objective or dies trying.
+
+### Turn Based System
+Develop a system using iniative to determine who is in turn, and thus who can make actions
+
+### Enemy AI System
+Develop the enemies logic so that they can fight the players party
+
+### Levels + Random Enemy Generation
+We can add multiple levels if we want to. Random enemy generation would be good too so that the enemies don't get stale
+
+### Additional Content
+Add additional races, classes, items, levels, etc.
+
+### Interface (UNLIKELY)
+Graduate from the text based interface
+
 
 
