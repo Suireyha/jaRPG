@@ -127,10 +127,10 @@ public class Character{
                 default:
                 //We got an error while generating a character without user input
                 if (systemCall){
-                    System.out.println("ERROR: PASSED INVALID ARGUMENT TO setRace()!!"); //One of us has made a mistake if we ever see this
+                    System.out.println("ERROR: PASSED INVALID ARGUMENT TO setRace()!"); //One of us has made a mistake if we ever see this
                 }
                 else{
-                    System.out.println("Select valid race (spelling/capitalisation must match examples!)"); //User passed an invalid string argument for their race
+                    System.out.println("Select valid race (check spelling!)"); //User passed an invalid string argument for their race
                 }
                 break;
             }
@@ -220,7 +220,7 @@ public class Character{
                     System.out.println("ERROR: PASSED INVALID ARGUMENT TO setClass()!!"); //One of us has made a mistake if we ever see this
                 }
                 else{
-                    System.out.println("Select valid class (spelling/capitalisation must match examples!)"); //User passed an invalid string argument for their race
+                    System.out.println("Select valid class (check spelling!)"); //User passed an invalid string argument for their race
                 }
                 break;
             }
