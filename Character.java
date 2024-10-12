@@ -465,9 +465,9 @@ public class Character{
     
       
         int maxContentLength = Math.max(Math.max(nameLine.length(), classLine.length()), 
-                                        Math.max(raceLine.length(), Math.max(strengthLine.length(), 
-                                        Math.max(wisdomLine.length(), 
-                                        Math.max(constitutionLine.length(), initiativeLine.length())))));
+        /*         All of this               |*/Math.max(raceLine.length(), Math.max(strengthLine.length(), 
+        /*          is just the maths for    \*/Math.max(wisdomLine.length(), 
+        /*           the initialisation       \*/Math.max(constitutionLine.length(), initiativeLine.length())))));
         
         
         int boxWidth = maxContentLength + 4;
