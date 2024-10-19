@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 public class Character{
     //Character's Name, Race and Class (by which I mean in-game class not class object :3)
-    String name; //This one is not called charName because it's not an class. player1.name gives the name of the player, player1.charRace.name gives the name of the race. 
+    String name; //This one is not called charName because it's not a class. player1.name gives the name of the player, player1.charRace.name gives the name of the race. 
     Race charRace;
     Class charClass;
     Inventory charInventory;
