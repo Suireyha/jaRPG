@@ -453,5 +453,4 @@ public class Main{
     public static void death(Character deadChar){ //Call this function when someone is killed
         System.out.println(deadChar.name + " was SLAIN by " + deadChar.lastAttacker.name + " using their " + deadChar.lastAttacker.charInventory.equippedWeapon.name);
     }
-
 }
