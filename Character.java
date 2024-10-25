@@ -253,40 +253,40 @@ public class Character{
         }
 
         private void classAttribute(){
-            //NOTE: ALL DEFAULT CLASS ATTRIBUTES SHOULD AMOUNT TO 40!!
+            //NOTE: ALL DEFAULT CLASS ATTRIBUTES SHOULD AMOUNT TO 30!!
             switch(type){
                 case BARBARIAN:
                     //Barbarians should be heavy hitting tanks, but are slow and dumb
-                    modifyAttributes(15, 5, 15, 5);
-                    //Strength = 15;
+                    modifyAttributes(10, 5, 10, 5);
+                    //Strength = 10;
                     //Wisdom = 5;
-                    //Constitution = 15;
+                    //Constitution = 10;
                     // Initiative = 5;
                     break;
                 case FIGHTER:
                     //Fighters should be good melee focused all-rounders
-                    modifyAttributes(12, 7, 10, 10);
-                    //Strength = 12;
-                    //Wisdom = 7;
-                    //Constitution = 10;
-                    // Initiative = 10;
+                    modifyAttributes(8, 6, 8, 7);
+                    //Strength = 8;
+                    //Wisdom = 6;
+                    //Constitution = 8;
+                    // Initiative = 7;
                     
                     break;
                 case MAGE:
                     //Mages/Wizards should be ranged class cannons
-                    modifyAttributes(6, 15, 6, 13);
-                    //Strength = 6;
-                    //Wisdom = 15;
+                    modifyAttributes(5, 13, 6, 6);
+                    //Strength = 5;
+                    //Wisdom = 13;
                     //Constitution = 6;
-                    // Initiative = 13;
+                    // Initiative = 6;
                     break;
                 case ASSASSIN:
-                    //Assassin's should have some spell capacity, decent melee output and great speed
-                    modifyAttributes(11, 8, 5, 16);
-                    //Strength = 11;
-                    //Wisdom = 8;
+                    //Assassin's should have high melee output and great speed
+                    modifyAttributes(9, 5, 5, 11);
+                    //Strength = 9;
+                    //Wisdom = 5;
                     //Constitution = 5;
-                    // Initiative = 16;
+                    // Initiative = 11;
                     break;
                 
 
@@ -582,7 +582,7 @@ public class Character{
     }
 
     public void setHealth(){
-        double max = constitution*2.5;
+        double max = constitution*2.0;
         if(firstHealth){
             //Set the health and max health of the character. This only happens when the character is created, otherwise else case is used
             health = max;
