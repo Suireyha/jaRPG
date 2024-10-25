@@ -14,15 +14,16 @@ public class Main{
 
     //Daggers
     static Item shankDagger = new Item(Item.Type.MELEE, "Shank", "A small, crude, makeshift blade. (+1 Strength)", 1, 0, 0, 0);
-    Item kitchenKnifeDagger = new Item(Item.Type.MELEE, "Kitchen Knife", "DIE DIE DIE DIE DIE !! DIE DIE ! (+4 Strength, -1 All Stats", 3, -1, -1, -1);
+    static Item kitchenKnifeDagger = new Item(Item.Type.MELEE, "Kitchen Knife", "DIE DIE DIE DIE DIE !! DIE DIE ! (+4 Strength, -1 All Stats", 3, -1, -1, -1);
 
     //Staffs
     static Item woodStaff = new Item(Item.Type.RANGED, "Wooden Staff", "It's pretty much just a branch with magical powers... (+1 Widsom)", 0, 1, 0, 0);
-    Item crystalStaff = new Item(Item.Type.RANGED, "Crystal Staff", "A beautiful staff built from some kind of magical crystal. It glows with power! (+5 Wisdom)", 0, 5, 0, 0);
+    static Item crystalStaff = new Item(Item.Type.RANGED, "Crystal Staff", "A beautiful staff built from some kind of magical crystal. It glows with power! (+5 Wisdom)", 0, 5, 0, 0);
 
     //Armour
     static Item ragsArmor = new Item(Item.Type.EQUIPABLE, "Rags", "A half broken dirt set of rags...", 0, 0, 0, 0);
     static Item leatherArmor = new Item(Item.Type.EQUIPABLE, "Leather Armor", "A simple set of armour, made of leather. (+1 Constutution)", 0, 0, 1, 0);
+    
 
     //Potions
     static Item healthPotion = new Item(Item.Type.POTION, "Potion of Health", "A potion of red fluid. (Recovers 5 HP)", 5, false);
@@ -35,7 +36,7 @@ public class Main{
     static Preset pre2 = new Preset("Enemy Mage", "ELF", "MAGE", false);
     static Preset pre3 = new Preset("Enemy Figther", "HUMAN", "FIGHTER", false);
 
-    //PLAER PRESETS FOR TESTING
+    //PLAYER PRESETS FOR TESTING
     static Preset pre4 = new Preset("EJACULUS", "ELF", "MAGE", true);
     static Preset pre5 = new Preset("GROGU", "ORC", "BARBARIAN", true);
     static Preset pre6 = new Preset("CABLE", "HUMAN", "ASSASSIN", true);
@@ -80,10 +81,10 @@ public class Main{
         //If you're using presets for player characters, uncomment the next 6 liens:
         player1= new Character(pre4);
         player2= new Character(pre5);
-        player3= new Character(pre6);
-        party.addAll(Arrays.asList(player1, player2, player3));
+        //player3= new Character(pre6);
+        party.addAll(Arrays.asList(player1, player2/* , player3*/));
         allEntities.addAll(party);
-        characters += 3;
+        characters += 2;
 
 
         //Game Loop

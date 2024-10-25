@@ -14,6 +14,7 @@ public class Character{
         ELF,
         ORC
     }
+    
     enum ClassType{
         BARBARIAN,
         FIGHTER,
@@ -173,7 +174,7 @@ public class Character{
                 modifyAttributes(3, -2, 2, -3);
                 //Strength +3
                 //Wisdom -2
-                //Constitution 2;
+                //Constitution +2;
                 // Initiative -3;
                 break;
             }
