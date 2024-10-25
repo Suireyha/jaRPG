@@ -96,6 +96,63 @@ public class Main{
         //Game Loop
         boolean playing = true;
         while(playing){
+
+            
+
+            //Enemy turn logic here
+            if(fighting && orderedCharacters.get(turn).player == false){
+                if((orderedCharacters.get(turn).health < orderedCharacters.get(turn).maxHealth/2) && orderedCharacters.get(turn).charInventory.has(healthPotion)){
+                    orderedCharacters.get(turn).charInventory.usePotion(healthPotion);
+                }
+                
+                orderedCharacters.get(turn).attack(party.get(rand(0, party.size() - 1)));
+                turn++;
+                turn %= characters;
+                displayTurn(orderedCharacters.get(turn));
+            }
+
+            //Win/Loss handling
+            if(fighting && enemies.size() < 1){
+                System.out.println("CONGRATULATIONS!!! You defeated the enemy party!");
+                fighting = false;
+                //call some reset function that resets everything
+            }
+            if(fighting && party.size() < 1){
+                System.out.println("You lost...");
+                fighting = false;
+                //call some reset function that resets everything
+            }
+
+            //Make sure all the data is up to date
+            for(int i = 0; i < allEntities.size(); i++){
+                if(!allEntities.get(i).alive){
+                    death(allEntities.get(i));
+                    allEntities.remove(i);
+                    characters--;
+                }
+            }
+
+            for(int i = 0; i < party.size(); i++){
+                if(!party.get(i).alive){
+                    party.remove(i);
+                }
+            }
+
+            for(int i = 0; i < enemies.size(); i++){
+                if(!enemies.get(i).alive){
+                    enemies.remove(i);
+                }
+            }
+
+            for(int i = 0; i < orderedCharacters.size(); i++){
+                if(!orderedCharacters.get(i).alive){
+                    if(turn > i){
+                        turn--;
+                    }
+                    orderedCharacters.remove(i);
+                }
+            }
+
             String uInput;
             if(fighting && orderedCharacters.get(turn).player == false){
                 uInput = " ";
@@ -251,47 +308,10 @@ public class Main{
             }
 
 
-            //Make sure all the data is up to date
-            for(int i = 0; i < allEntities.size(); i++){
-                if(!allEntities.get(i).alive){
-                    death(allEntities.get(i));
-                    allEntities.remove(i);
-                    characters--;
-                }
-            }
 
-            for(int i = 0; i < party.size(); i++){
-                if(!party.get(i).alive){
-                    party.remove(i);
-                }
-            }
 
-            for(int i = 0; i < enemies.size(); i++){
-                if(!enemies.get(i).alive){
-                    enemies.remove(i);
-                }
-            }
 
-            for(int i = 0; i < orderedCharacters.size(); i++){
-                if(!orderedCharacters.get(i).alive){
-                    if(turn > i){
-                        turn--;
-                    }
-                    orderedCharacters.remove(i);
-                }
-            }
 
-            //Enemy turn logic here
-            if(fighting && orderedCharacters.get(turn).player == false){
-                displayTurn(orderedCharacters.get(turn));
-                if((orderedCharacters.get(turn).health < orderedCharacters.get(turn).maxHealth/2) && orderedCharacters.get(turn).charInventory.has(healthPotion)){
-                    orderedCharacters.get(turn).charInventory.usePotion(healthPotion);
-                }
-                
-                orderedCharacters.get(turn).attack(party.get(rand(0, party.size() - 1)));
-                turn++;
-                turn %= characters;
-            }
 
         }
 
@@ -370,6 +390,7 @@ public class Main{
         System.out.println("");
         displayOrder(orderedCharacters.get(0));
         System.out.println("");
+        displayTurn(orderedCharacters.get(0));
     }
 
     public static void displayOrder(Character first){ //THIS FUNCTION IS RECURSIVE!!!

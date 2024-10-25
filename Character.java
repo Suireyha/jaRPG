@@ -327,6 +327,9 @@ public class Character{
                 break;
             }
 
+            equippedWeapon = items.get(0);
+            equippedArmour = items.get(1);
+            
             sort();
 
         }
@@ -470,8 +473,7 @@ public class Character{
                 }
             }
 
-
-
+            System.out.println(name + " used their " + potion.name + "!");
 
         }
 
