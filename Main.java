@@ -238,33 +238,40 @@ public class Main{
         }
     }
     
+   static Scanner term = new Scanner(System.in);//global scanner
     public static String cin(){
-        Scanner term = new Scanner(System.in);  // Create a Scanner object
-        String input = term.nextLine();
-        return input;  // Read +return user input
+        
+          // Create a Scanner object
+        return term.nextLine();  // Read +return user input
         //term.close(); //Avoid a memory leak lmao
 
     }
 
     public static int validIntegerInput(int min, int max){ // jus to check if input is valid, game would end due to exception in thread error.
+
         int input = -1;
         boolean valid = false;
+
+
         while (!valid){
+            String userInput = cin();
             try {
-                String userInput = cin();
+                
                 input = Integer.parseInt(userInput);
                 if (input >= min && input <= max) {
-                    valid = true;
-                } else {
-                    System.out.println("Input Error!");
-                }
+                valid = true;
+            } else {
+                System.out.println("Please enter a number between " + min + " and " + max);
+            }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input!");
             }
         }
+
         return input;
         //term.close();
     }
+    
     public static void displayTurn(Character current){
         System.out.println("It's " + current.name + "'s turn!");
     }
