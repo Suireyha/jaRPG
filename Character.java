@@ -582,7 +582,7 @@ public class Character{
     }
 
     public void setHealth(){
-        double max = constitution*1.5;
+        double max = constitution*2.5;
         if(firstHealth){
             //Set the health and max health of the character. This only happens when the character is created, otherwise else case is used
             health = max;
