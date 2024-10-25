@@ -24,24 +24,14 @@ This application is *being* designed to create an enjoyable text-based RPG that 
 * A way to lose
 
 ## How to run the program
-
-To be determined :)
+After executing, the user should be greeted with a list of avaliable commands. This list can be recalled by typing HELP
 
 
 
 ## Project Roadmap (IMPORTANT!!)
 
-### Combat System
-Develop a system for actually playing through combat scenarios- making actions, getting hit, etc
-
-### Win/Loss Handling
-Handle what happens if the player completes their objective or dies trying.
-
-### Turn Based System
-Develop a system using iniative to determine who is in turn, and thus who can make actions
-
-### Enemy AI System
-Develop the enemies logic so that they can fight the players party
+### Bug Fixes....
+We need to fix a lot.
 
 ### Levels + Random Enemy Generation
 We can add multiple levels if we want to. Random enemy generation would be good too so that the enemies don't get stale
@@ -52,5 +42,10 @@ Add additional races, classes, items, levels, etc.
 ### Interface (UNLIKELY)
 Graduate from the text based interface
 
+## Contribution Estimates
+Marvin Kelly -> 40%
+Caleb Chew   -> 20%
+RJ           -> 20%
+Kong         -> 20%
 
 

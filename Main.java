@@ -97,8 +97,6 @@ public class Main{
         boolean playing = true;
         while(playing){
 
-            
-
             //Enemy turn logic here
             if(fighting && orderedCharacters.get(turn).player == false){
                 if((orderedCharacters.get(turn).health < orderedCharacters.get(turn).maxHealth/2) && orderedCharacters.get(turn).charInventory.has(healthPotion)){
