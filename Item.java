@@ -11,9 +11,10 @@ public class Item{
      */
     enum Type{
         MELEE,
+        MAGIC,
         RANGED,
         POTION,
-        EQUIPABLE
+        ARMOUR
     }
 
     /*Just gonna write my rationale for the simple names here for markers.

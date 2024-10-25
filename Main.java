@@ -21,12 +21,12 @@ public class Main{
     static Item kitchenKnifeDagger = new Item(Item.Type.MELEE, "Kitchen Knife", "DIE DIE DIE DIE DIE !! DIE DIE ! (+4 Strength, -1 All Stats", 3, -1, -1, -1);
 
     //Staffs
-    static Item woodStaff = new Item(Item.Type.RANGED, "Wooden Staff", "It's pretty much just a branch with magical powers... (+1 Widsom)", 0, 1, 0, 0);
-    static Item crystalStaff = new Item(Item.Type.RANGED, "Crystal Staff", "A beautiful staff built from some kind of magical crystal. It glows with power! (+5 Wisdom)", 0, 5, 0, 0);
+    static Item woodStaff = new Item(Item.Type.MAGIC, "Wooden Staff", "It's pretty much just a branch with magical powers... (+1 Widsom)", 0, 1, 0, 0);
+    static Item crystalStaff = new Item(Item.Type.MAGIC, "Crystal Staff", "A beautiful staff built from some kind of magical crystal. It glows with power! (+5 Wisdom)", 0, 5, 0, 0);
 
     //Armour
-    static Item ragsArmor = new Item(Item.Type.EQUIPABLE, "Rags", "A half broken dirt set of rags...", 0, 0, 0, 0);
-    static Item leatherArmor = new Item(Item.Type.EQUIPABLE, "Leather Armor", "A simple set of armour, made of leather. (+1 Constutution)", 0, 0, 1, 0);
+    static Item ragsArmor = new Item(Item.Type.ARMOUR, "Rags", "A half broken dirt set of rags...", 0, 0, 0, 0);
+    static Item leatherArmor = new Item(Item.Type.ARMOUR, "Leather Armor", "A simple set of armour, made of leather. (+1 Constutution)", 0, 0, 1, 0);
 
     //Potions
     static Item healthPotion = new Item(Item.Type.POTION, "Potion of Health", "A potion of red fluid. (Recovers 5 HP)", 5, false);
@@ -297,7 +297,7 @@ public class Main{
     
 
     public static void death(Character deadChar){ //Call this function when someone is killed
-        System.out.println(deadChar.name + "was SLAIN by " + deadChar.lastAttacker.name + " using their " + deadChar.lastAttacker.charInventory.equippedWeapon.name);
+        System.out.println(deadChar.name + " was SLAIN by " + deadChar.lastAttacker.name + " using their " + deadChar.lastAttacker.charInventory.equippedWeapon.name);
     }
 
 

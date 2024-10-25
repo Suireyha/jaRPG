@@ -334,7 +334,7 @@ public class Character{
 
 
             for(int i = 0; i < items.size(); i++){
-                if(items.get(i).type == Item.Type.MELEE || items.get(i).type == Item.Type.RANGED || items.get(i).type == Item.Type.EQUIPABLE){
+                if(items.get(i).type == Item.Type.MELEE || items.get(i).type == Item.Type.MAGIC || items.get(i).type == Item.Type.ARMOUR){
                     System.out.println("( " + items.get(i).name + " = " + (i + 1) + " )");
                     highestIndex = i + 1;
                 }
@@ -355,7 +355,7 @@ public class Character{
             switch(items.get(uInput).type){
                 case MELEE:
                     //No break here so that ranged and melee weapons just equip to weapon slot
-                case RANGED:
+                case MAGIC:
                     if(equippedWeapon != null){
                         modifyAttributes(-1*equippedWeapon.strength, -1*equippedWeapon.wisdom, -1*equippedWeapon.constitution, -1*equippedWeapon.initiative); //Remove old weapon stats
                     }
@@ -364,7 +364,7 @@ public class Character{
                     modifyAttributes(equippedWeapon.strength, equippedWeapon.wisdom, equippedWeapon.constitution, equippedWeapon.initiative); //Add new weapon stats
                     setHealth();
                 break;
-                case EQUIPABLE:
+                case ARMOUR:
                     if(equippedArmour != null){
                         modifyAttributes(-1*equippedArmour.strength, -1*equippedArmour.wisdom, -1*equippedArmour.constitution, -1*equippedArmour.initiative); //Remove old armour stats
                     }
@@ -392,12 +392,12 @@ public class Character{
                 }
             }
             for(int i = 0; i < items.size(); i++){
-                if(items.get(i).type == Item.Type.RANGED){
+                if(items.get(i).type == Item.Type.MAGIC){
                     temp.add(items.get(i));
                 }
             }
             for(int i = 0; i < items.size(); i++){
-                if(items.get(i).type == Item.Type.EQUIPABLE){
+                if(items.get(i).type == Item.Type.ARMOUR){
                     temp.add(items.get(i));
                 }
             }
@@ -418,11 +418,11 @@ public class Character{
             System.out.println("|                                       |");
             System.out.println("|----------------WEAPONS----------------|");
             displaySection(Item.Type.MELEE);
-            displaySection(Item.Type.RANGED);
+            displaySection(Item.Type.MAGIC);
             System.out.println("|                                       |");
             System.out.println("|----------------ARMOUR-----------------|");
             System.out.println("|                                       |");
-            displaySection(Item.Type.EQUIPABLE);
+            displaySection(Item.Type.ARMOUR);
             System.out.println("|                                       |");
             System.out.println("|----------------POTIONS----------------|");
             System.out.println("|                                       |");
@@ -603,7 +603,7 @@ public class Character{
             dmg = 0.5 * strength;
         }
 
-        if(charInventory.equippedWeapon.type == Item.Type.RANGED){
+        if(charInventory.equippedWeapon.type == Item.Type.MAGIC){
             dmg = 0.5 * wisdom;
         }
         
