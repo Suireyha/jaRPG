@@ -1,15 +1,12 @@
-import java.util.Scanner;  //Import Scanner object for reading user input
-import java.util.ArrayList; //Import ArrayList
+import java.util.ArrayList;  //Import Scanner object for reading user input
+import java.util.Arrays; //Import ArrayList
 import java.util.Collections;
-import java.util.Arrays; //For addAll();
-import java.lang.Math;
-
-
-
-
+import java.util.Scanner; //For addAll();
 
 public class Main{
-    //IF YOU WANT TO CREATE NEW ITEMS, DO IT HERE!!!
+    // Constants for maximum players
+    private static final int MAX_PLAYERS = 3;
+    
     static Item fists = new Item(Item.Type.MELEE, "Fists", "I WILL BREAK YOU WITH MY BARE HANDS!", 0, 0, 0, 0);
 
     //Swords
@@ -46,18 +43,18 @@ public class Main{
 
     public static void main(String[] args){
         //The players party- it's an array of with their characters
-        ArrayList<Character> party = new ArrayList();
+        ArrayList<Character> party = new ArrayList<>();
         Character player1;
         Character player2;
         Character player3;
         //The enemy party- it's an array of enemy characters
-        ArrayList<Character> enemies = new ArrayList();
+        ArrayList<Character> enemies = new ArrayList<>();
         Character enemy1 = null;
         Character enemy2 = null;
         Character enemy3 = null;
         //All characters stored here so that user can select anyone in combat;
-        ArrayList<Character> allEntities = new ArrayList();
-        ArrayList<Character> orderedCharacters = new ArrayList();
+        ArrayList<Character> allEntities = new ArrayList<>();
+        ArrayList<Character> orderedCharacters = new ArrayList<>();
         //Counts the number of characters that can be selected at the moment
         int characters = 0;
         int numPlayers = 0;
@@ -85,10 +82,10 @@ public class Main{
         System.out.println(" ");
         help();
         //If you're using presets for player characters, uncomment the next 6 liens:
-        player1= new Character(pre4);
-        player2= new Character(pre5);
+        player1 = new Character(pre4);
+        player2 = new Character(pre5);
         //player3= new Character(pre6);
-        party.addAll(Arrays.asList(player1, player2/* , player3*/));
+        party.addAll(Arrays.asList(player1, player2));
         allEntities.addAll(party);
         characters += 2;
 
@@ -151,6 +148,8 @@ public class Main{
                 }
             }
 
+            updateCharacterLists(allEntities,party,enemies,orderedCharacters,turn,characters);
+
             String uInput;
             if(fighting && orderedCharacters.get(turn).player == false){
                 uInput = " ";
@@ -159,162 +158,7 @@ public class Main{
                 uInput = cin();
                 uInput = uInput.toUpperCase(); //This means that commands can be run without them having to be input as all uppercase by the user
             }   
-            switch(uInput){
-                case "HELP":
-                    help();
-                break;
-                case "CREATE":
-                    switch(characters){
-                        case 0:
-                        player1 = new Character();
-                        party.add(player1);
-                        allEntities.add(player1);
-                        characters++;
-                        break;
-                        case 1:
-                        player2 = new Character();
-                        party.add(player2);
-                        allEntities.add(player2);
-                        characters++;
-                        break;
-                        case 2:
-                        player3 = new Character();
-                        party.add(player3);
-                        allEntities.add(player3);
-                        characters++;
-                        break;
-                        default:
-                        System.out.println("You already have 3 players!!");
-                        break;
-                    }
-                break;
-                case "SELECT":
-                    if(allEntities.size() < 1){
-                        System.out.println("There are no characters! (use CREATE)");
-                        break;
-                    }
-                    int selection;
-                    boolean invalid = true;
-                    while(invalid){
-
-                        System.out.println("Who do you want to select?");
-
-                        //Displays all of the avaliable characters to select
-                        for(int i = 0; i < characters; i++){
-                            System.out.println("( " + allEntities.get(i).name + " = " + (i + 1) + ")");
-                        }
-                        selection = Integer.valueOf(cin());
-
-                        //Checks if selction if valid, loops if not
-                        if(selection > 0 && selection <= characters){
-                            selected = selection - 1;
-                            System.out.println(allEntities.get(selected).name + " is selected");
-                            invalid = false;
-                        }
-
-                        else{
-                            //Gives an error message if the reason is because there are no characters
-                            if(checkForCharacters(party));
-                            else{
-                                System.out.println("Invalid selection!");
-                            }
-                            
-                        }
-                    }
-                
-
-                break;
-                case "SHOW INV":
-                    if(checkForCharacters(allEntities)){
-                        allEntities.get(selected).charInventory.display();
-                    }
-                break;
-                case "SHOW STATS":
-                    if(checkForCharacters(allEntities)){
-                        allEntities.get(selected).displayCharacterData();
-                    }
-                break;
-                case "EQUIP":
-                    if(!getSelectedCharacterType(allEntities.get(selected))){
-                        System.out.println("Enemy is currently selected!");
-                    }
-                    else if(checkForCharacters(party)){ //This action should only be performable for playable characters, check if it's a player
-                        System.out.println("What do you want to equip?");
-
-                        party.get(selected).charInventory.equip();
-                    }
-                break;
-                case "START":
-                if(checkForCharacters(party) && !fighting){
-                    fighting = true;
-                    characters += 3;
-                    loadTestScenario(enemies, allEntities, enemy1, enemy2, enemy3);
-                    for(int i = 0; i < allEntities.size(); i++){
-                        allEntities.get(i).rollInitiative();
-                        orderedCharacters.add(allEntities.get(i));
-                    }
-                    
-                    setOrder(orderedCharacters);
-                }
-                break;
-                case "ATTACK":
-                if(!fighting){
-                    System.out.println("Not currently in engagement");
-                    break;
-                }
-                if(!getSelectedCharacterType(allEntities.get(selected))){
-                    System.out.println("Enemy is currently selected!");
-                }
-                else if(allEntities.get(selected) != orderedCharacters.get(turn)){
-                    System.out.println("It's not this character's turn!");
-                }
-                else if(checkForCharacters(party) && fighting){
-                    //Check who's turn it is after initiative is added
-                    boolean invalidS = true;
-                    while(invalidS){
-                        //Display avaliable enemies
-                        System.out.println("Select an Enemy:");
-                        for(int i = 0; i < enemies.size(); i++){
-                            System.out.println("( " + enemies.get(i).name + " = " + (i + 1) + ")");
-                        }
-                        selectedForAttack = Integer.valueOf(cin()) - 1;
-
-                        //Checks if selction if valid, loops if not
-                        if(selectedForAttack >= 0 && selectedForAttack  < enemies.size()){
-                            System.out.println(allEntities.get(selected).name + " is selected");
-                            invalidS = false;
-                        }
-                    }
-                    //Do the attack
-                    party.get(selected).attack(enemies.get(selectedForAttack));
-                    turn++;
-                    turn %= characters;
-                    displayTurn(orderedCharacters.get(turn));
-                }
-                break;
-                case "USE":
-                if(!getSelectedCharacterType(allEntities.get(selected))){
-                    System.out.println("Enemy is currently selected!");
-                }
-                else if(checkForCharacters(party)){
-                    party.get(selected).charInventory.usePotion();
-                }
-                break;
-                case "QUIT":
-                    playing = false;
-                break;
-                default:
-                //Do nothing
-                break;
-                    
-            }
-
-
-
-
-
-
-
+            processUserInput(uInput, party, allEntities, enemies, orderedCharacters, selected, selectedForAttack, turn, characters, fighting, playing);
         }
 
         
@@ -323,22 +167,22 @@ public class Main{
 
     static public void help(){
         System.out.println("\n" +
-        "HELP -> shows this list again\n" +
-        "CREATE -> starts the character creator (you should use this now)\n" +
-        "SELECT -> allows you to select a character\n" +
-        "SHOW INV -> displays the inventory of the selected character\n" +
-        "SHOW STATS -> displays the character sheet of the selected character\n" +
-        "EQUIP -> equips an item from your inventory\n" +
-        "START -> starts combat\n" +
-        "ATTACK -> the character in turn can attack an enemy\n" +
-        "USE -> allows you to use an item from your inventory\n" +
-        "QUIT -> ends program\n" +
-        "\n");
+            "HELP -> shows this list again\n" +
+            "CREATE -> starts the character creator (you should use this now)\n" +
+            "SELECT -> allows you to select a character\n" +
+            "SHOW INV -> displays the inventory of the selected character\n" +
+            "SHOW STATS -> displays the character sheet of the selected character\n" +
+            "EQUIP -> equips an item from your inventory\n" +
+            "START -> starts combat\n" +
+            "ATTACK -> the character in turn can attack an enemy\n" +
+            "USE -> allows you to use an item from your inventory\n" +
+            "QUIT -> ends program\n" +
+            "\n");
     }
 
     public static boolean checkForCharacters(ArrayList<Character> party){
         //If there are no Characters, return false
-        if(party.size() < 1){
+        if (party.isEmpty()) {
             System.out.println("There are no characters!");
             return false;
         }
@@ -349,9 +193,9 @@ public class Main{
 
     public static int rand(int min, int max){
         int range = max - min + 1;
-        int rand = (int)(Math.random() * range) + min;
-        return rand;
+        return (int) (Math.random() * range) + min;
     }
+
 
     public static void loadTestScenario(ArrayList<Character> enemyList, ArrayList<Character> allList, Character enemy1, Character enemy2, Character enemy3){
         enemy1 = new Character(pre1);
@@ -362,10 +206,7 @@ public class Main{
     }
 
     public static boolean getSelectedCharacterType(Character selected){
-        if(selected.player){
-            return true;
-        }
-        return false;
+        return selected.player;
     }
 
     public static void setOrder(ArrayList<Character> orderedCharacters){
@@ -391,10 +232,7 @@ public class Main{
     }
 
     public static void displayOrder(Character first){ //THIS FUNCTION IS RECURSIVE!!!
-        if(first == null){
-            //Do nothing, it's the end of the chain
-        }
-        else{
+        if(first != null){
             System.out.println("\t" + first.name + " -> ROLLED: " + first.roundInitiative);
             displayOrder(first.next);
         }
@@ -402,28 +240,28 @@ public class Main{
     
     public static String cin(){
         Scanner term = new Scanner(System.in);  // Create a Scanner object
-        return term.nextLine();  // Read +return user input
+        String input = term.nextLine();
+        return input;  // Read +return user input
         //term.close(); //Avoid a memory leak lmao
 
     }
 
     public static int validIntegerInput(int min, int max){ // jus to check if input is valid, game would end due to exception in thread error.
-
         int input = -1;
         boolean valid = false;
-
-
         while (!valid){
             try {
                 String userInput = cin();
                 input = Integer.parseInt(userInput);
-                valid = true;
-
+                if (input >= min && input <= max) {
+                    valid = true;
+                } else {
+                    System.out.println("Input Error!");
+                }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input!");
             }
         }
-
         return input;
         //term.close();
     }
@@ -435,4 +273,143 @@ public class Main{
         System.out.println(deadChar.name + " was SLAIN by " + deadChar.lastAttacker.name + " using their " + deadChar.lastAttacker.charInventory.equippedWeapon.name);
     }
 
+    private static void updateCharacterLists(ArrayList<Character> allEntities, ArrayList<Character> party, ArrayList<Character> enemies, ArrayList<Character> orderedCharacters, int turn, int characters) {
+        for (int i = 0; i < allEntities.size(); i++) {
+            if (!allEntities.get(i).alive) {
+                death(allEntities.get(i));
+                allEntities.remove(i);
+                characters--;
+            }
+        }
+
+        for (int i = 0; i < party.size(); i++) {
+            if (!party.get(i).alive) {
+                party.remove(i);
+            }
+        }
+
+        for (int i = 0; i < enemies.size(); i++) {
+            if (!enemies.get(i).alive) {
+                enemies.remove(i);
+            }
+        }
+
+        for (int i = 0; i < orderedCharacters.size(); i++) {
+            if (!orderedCharacters.get(i).alive) {
+                if (turn > i) {
+                    turn--;
+                }
+                orderedCharacters.remove(i);
+            }
+        }
+    }
+
+    private static void processUserInput(String uInput, ArrayList<Character> party, ArrayList<Character> allEntities, ArrayList<Character> enemies, ArrayList<Character> orderedCharacters, int selected, int selectedForAttack, int turn, int characters, boolean fighting, boolean playing) {
+        switch (uInput) {
+            case "HELP":
+                help();
+                break;
+            case "CREATE":
+                if (characters < MAX_PLAYERS) {
+                    Character newPlayer = new Character();
+                    party.add(newPlayer);
+                    allEntities.add(newPlayer);
+                    characters++;
+                } else {
+                    System.out.println("You already have 3 players!!");
+                }
+                break;
+            case "SELECT":
+                if (allEntities.isEmpty()) {
+                    System.out.println("There are no characters! (use CREATE)");
+                    break;
+                }
+                boolean invalid = true;
+                while (invalid) {
+                    System.out.println("Who do you want to select?");
+                    for (int i = 0; i < characters; i++) {
+                        System.out.println("( " + allEntities.get(i).name + " = " + (i + 1) + ")");
+                    }
+                    int selection = validIntegerInput(1, characters);
+                    if (selection > 0 && selection <= characters) {
+                        selected = selection - 1;
+                        System.out.println(allEntities.get(selected).name + " is selected");
+                        invalid = false;
+                    } else {
+                        System.out.println("Invalid selection!");
+                    }
+                }
+                break;
+            case "SHOW INV":
+                if (checkForCharacters(allEntities)) {
+                    allEntities.get(selected).charInventory.display();
+                }
+                break;
+            case "SHOW STATS":
+                if (checkForCharacters(allEntities)) {
+                    allEntities.get(selected).displayCharacterData();
+                }
+                break;
+            case "EQUIP":
+                if (!getSelectedCharacterType(allEntities.get(selected))) {
+                    System.out.println("Enemy is currently selected!");
+                } else if (checkForCharacters(party)) {
+                    System.out.println("What do you want to equip?");
+                    party.get(selected).charInventory.equip();
+                }
+                break;
+            case "START":
+                if (checkForCharacters(party) && !fighting) {
+                    fighting = true;
+                    characters += 3;
+                    loadTestScenario(enemies, allEntities, null, null, null);
+                    for (Character entity : allEntities) {
+                        entity.rollInitiative();
+                        orderedCharacters.add(entity);
+                    }
+                    setOrder(orderedCharacters);
+                }
+                break;
+            case "ATTACK":
+                if (!fighting) {
+                    System.out.println("Not currently in engagement");
+                    break;
+                }
+                if (!getSelectedCharacterType(allEntities.get(selected))) {
+                    System.out.println("Enemy is currently selected!");
+                } else if (allEntities.get(selected) != orderedCharacters.get(turn)) {
+                    System.out.println("It's not this character's turn!");
+                } else if (checkForCharacters(party) && fighting) {
+                    boolean invalidS = true;
+                    while (invalidS) {
+                        System.out.println("Select an Enemy:");
+                        for (int i = 0; i < enemies.size(); i++) {
+                            System.out.println("( " + enemies.get(i).name + " = " + (i + 1) + ")");
+                        }
+                        selectedForAttack = validIntegerInput(1, enemies.size()) - 1;
+                        if (selectedForAttack >= 0 && selectedForAttack < enemies.size()) {
+                            System.out.println(allEntities.get(selected).name + " is selected");
+                            invalidS = false;
+                        }
+                    }
+                    party.get(selected).attack(enemies.get(selectedForAttack));
+                    turn++;
+                    turn %= characters;
+                    displayTurn(orderedCharacters.get(turn));
+                }
+                break;
+            case "USE":
+                if (!getSelectedCharacterType(allEntities.get(selected))) {
+                    System.out.println("Enemy is currently selected!");
+                } else if (checkForCharacters(party)) {
+                    party.get(selected).charInventory.usePotion();
+                }
+                break;
+            case "QUIT":
+                playing = false;
+                break;
+            default:
+                break;
+        }
+    }
 }
