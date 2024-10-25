@@ -258,6 +258,10 @@ public class Main{
                 }
                 break;
                 case "ATTACK":
+                if(!fighting){
+                    System.out.println("Not currently in engagement");
+                    break;
+                }
                 if(!getSelectedCharacterType(allEntities.get(selected))){
                     System.out.println("Enemy is currently selected!");
                 }
