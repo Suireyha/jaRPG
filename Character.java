@@ -673,6 +673,7 @@ public class Character{
         if(enemy.health <= 0){
             //If the attacked character's health is below zero, they're deade
             enemy.alive = false;
+            Main.death(enemy);
         }
 
     }
