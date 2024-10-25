@@ -1,15 +1,12 @@
-import java.util.Scanner;  //Import Scanner object for reading user input
-import java.util.ArrayList; //Import ArrayList
+import java.util.ArrayList;  //Import Scanner object for reading user input
+import java.util.Arrays; //Import ArrayList
 import java.util.Collections;
-import java.util.Arrays; //For addAll();
-import java.lang.Math;
-
-
-
-
+import java.util.Scanner; //For addAll();
 
 public class Main{
-    //IF YOU WANT TO CREATE NEW ITEMS, DO IT HERE!!!
+    // Constants for maximum players
+    private static final int MAX_PLAYERS = 3;
+    
     static Item fists = new Item(Item.Type.MELEE, "Fists", "I WILL BREAK YOU WITH MY BARE HANDS!", 0, 0, 0, 0);
 
     //Swords
@@ -46,18 +43,18 @@ public class Main{
 
     public static void main(String[] args){
         //The players party- it's an array of with their characters
-        ArrayList<Character> party = new ArrayList();
+        ArrayList<Character> party = new ArrayList<>();
         Character player1;
         Character player2;
         Character player3;
         //The enemy party- it's an array of enemy characters
-        ArrayList<Character> enemies = new ArrayList();
+        ArrayList<Character> enemies = new ArrayList<>();
         Character enemy1 = null;
         Character enemy2 = null;
         Character enemy3 = null;
         //All characters stored here so that user can select anyone in combat;
-        ArrayList<Character> allEntities = new ArrayList();
-        ArrayList<Character> orderedCharacters = new ArrayList();
+        ArrayList<Character> allEntities = new ArrayList<>();
+        ArrayList<Character> orderedCharacters = new ArrayList<>();
         //Counts the number of characters that can be selected at the moment
         int characters = 0;
         int numPlayers = 0;
@@ -78,17 +75,20 @@ public class Main{
         
         //Launch sequence
         System.out.println(" ");
-        System.out.println("Welcome to jaRPG! Primarily developed by Marvin Kelly,\n" + 
-        "developed by Caleb Chew, RJ and Kong.\n" +
-        "\n" + 
-        "To get started, here are a couple useful commands:\n");
+        System.out.println("""
+        
+        Welcome to jaRPG! Primarily developed by Marvin Kelly,
+        developed by Caleb Chew, RJ and Kong.
+        
+        To get started, here are a couple useful commands:
+        """);
         System.out.println(" ");
         help();
         //If you're using presets for player characters, uncomment the next 6 liens:
-        player1= new Character(pre4);
-        player2= new Character(pre5);
+        player1 = new Character(pre4);
+        player2 = new Character(pre5);
         //player3= new Character(pre6);
-        party.addAll(Arrays.asList(player1, player2/* , player3*/));
+        party.addAll(Arrays.asList(player1, player2));
         allEntities.addAll(party);
         characters += 2;
 
@@ -131,6 +131,7 @@ public class Main{
             //Make sure all the data is up to date
             for(int i = 0; i < allEntities.size(); i++){
                 if(!allEntities.get(i).alive){
+                    death(allEntities.get(i));
                     allEntities.remove(i);
                     characters--;
                 }
@@ -156,6 +157,8 @@ public class Main{
                     orderedCharacters.remove(i);
                 }
             }
+
+            updateCharacterLists(allEntities,party,enemies,orderedCharacters,turn,characters);
 
             String uInput;
             if(fighting && orderedCharacters.get(turn).player == false){
@@ -296,13 +299,6 @@ public class Main{
                     turn++;
                     turn %= characters;
                     displayTurn(orderedCharacters.get(turn));
-                    if(orderedCharacters.get(turn).player){
-                        for(int i = 0; i < party.size(); i++){
-                            if(orderedCharacters.get(turn) == party.get(i)){
-                                selected = i;
-                            }
-                        }
-                    }
                 }
                 break;
                 case "USE":
@@ -336,22 +332,22 @@ public class Main{
 
     static public void help(){
         System.out.println("\n" +
-        "HELP -> shows this list again\n" +
-        "CREATE -> starts the character creator (you should use this now)\n" +
-        "SELECT -> allows you to select a character\n" +
-        "SHOW INV -> displays the inventory of the selected character\n" +
-        "SHOW STATS -> displays the character sheet of the selected character\n" +
-        "EQUIP -> equips an item from your inventory\n" +
-        "START -> starts combat\n" +
-        "ATTACK -> the character in turn can attack an enemy\n" +
-        "USE -> allows you to use an item from your inventory\n" +
-        "QUIT -> ends program\n" +
-        "\n");
+            "HELP -> shows this list again\n" +
+            "CREATE -> starts the character creator (you should use this now)\n" +
+            "SELECT -> allows you to select a character\n" +
+            "SHOW INV -> displays the inventory of the selected character\n" +
+            "SHOW STATS -> displays the character sheet of the selected character\n" +
+            "EQUIP -> equips an item from your inventory\n" +
+            "START -> starts combat\n" +
+            "ATTACK -> the character in turn can attack an enemy\n" +
+            "USE -> allows you to use an item from your inventory\n" +
+            "QUIT -> ends program\n" +
+            "\n");
     }
 
     public static boolean checkForCharacters(ArrayList<Character> party){
         //If there are no Characters, return false
-        if(party.size() < 1){
+        if (party.isEmpty()) {
             System.out.println("There are no characters!");
             return false;
         }
@@ -362,9 +358,9 @@ public class Main{
 
     public static int rand(int min, int max){
         int range = max - min + 1;
-        int rand = (int)(Math.random() * range) + min;
-        return rand;
+        return (int) (Math.random() * range) + min;
     }
+
 
     public static void loadTestScenario(ArrayList<Character> enemyList, ArrayList<Character> allList, Character enemy1, Character enemy2, Character enemy3){
         enemy1 = new Character(pre1);
@@ -375,10 +371,7 @@ public class Main{
     }
 
     public static boolean getSelectedCharacterType(Character selected){
-        if(selected.player){
-            return true;
-        }
-        return false;
+        return selected.player;
     }
 
     public static void setOrder(ArrayList<Character> orderedCharacters){
@@ -405,44 +398,36 @@ public class Main{
     }
 
     public static void displayOrder(Character first){ //THIS FUNCTION IS RECURSIVE!!!
-        if(first == null){
-            //Do nothing, it's the end of the chain
-        }
-        else{
+        if(first != null){
             System.out.println("\t" + first.name + " -> ROLLED: " + first.roundInitiative);
             displayOrder(first.next);
         }
     }
-    static Scanner term = new Scanner(System.in);//global scanner
+    
     public static String cin(){
-        
-          // Create a Scanner object
-        return term.nextLine();  // Read +return user input
+        Scanner term = new Scanner(System.in);  // Create a Scanner object
+        String input = term.nextLine();
+        return input;  // Read +return user input
         //term.close(); //Avoid a memory leak lmao
 
     }
 
     public static int validIntegerInput(int min, int max){ // jus to check if input is valid, game would end due to exception in thread error.
-
         int input = -1;
         boolean valid = false;
-
-
         while (!valid){
-            String userInput = cin();
             try {
-                
+                String userInput = cin();
                 input = Integer.parseInt(userInput);
                 if (input >= min && input <= max) {
-                valid = true;
-            } else {
-                System.out.println("Please enter a number between " + min + " and " + max);
-            }
+                    valid = true;
+                } else {
+                    System.out.println("Input Error!");
+                }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input!");
             }
         }
-
         return input;
         //term.close();
     }
@@ -453,4 +438,5 @@ public class Main{
     public static void death(Character deadChar){ //Call this function when someone is killed
         System.out.println(deadChar.name + " was SLAIN by " + deadChar.lastAttacker.name + " using their " + deadChar.lastAttacker.charInventory.equippedWeapon.name);
     }
+
 }
