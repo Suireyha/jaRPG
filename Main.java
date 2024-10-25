@@ -158,7 +158,7 @@ public class Main{
                 }
             }
 
-            updateCharacterLists(allEntities,party,enemies,orderedCharacters,turn,characters);
+            //updateCharacterLists(allEntities,party,enemies,orderedCharacters,turn,characters);
 
             String uInput;
             if(fighting && orderedCharacters.get(turn).player == false){
