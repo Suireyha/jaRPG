@@ -107,6 +107,13 @@ public class Main{
                 turn++;
                 turn %= characters;
                 displayTurn(orderedCharacters.get(turn));
+                if(orderedCharacters.get(turn).player){
+                    for(int i = 0; i < party.size(); i++){
+                        if(orderedCharacters.get(turn) == party.get(i)){
+                            selected = i;
+                        }
+                    }
+                }
             }
 
             //Win/Loss handling
@@ -289,6 +296,13 @@ public class Main{
                     turn++;
                     turn %= characters;
                     displayTurn(orderedCharacters.get(turn));
+                    if(orderedCharacters.get(turn).player){
+                        for(int i = 0; i < party.size(); i++){
+                            if(orderedCharacters.get(turn) == party.get(i)){
+                                selected = i;
+                            }
+                        }
+                    }
                 }
                 break;
                 case "USE":
@@ -387,6 +401,7 @@ public class Main{
         displayOrder(orderedCharacters.get(0));
         System.out.println("");
         displayTurn(orderedCharacters.get(0));
+        
     }
 
     public static void displayOrder(Character first){ //THIS FUNCTION IS RECURSIVE!!!
