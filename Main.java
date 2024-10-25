@@ -1,6 +1,6 @@
 import java.util.Scanner;  //Import Scanner object for reading user input
 import java.util.ArrayList; //Import ArrayList
-import java.util.Collection;
+import java.util.Collections;
 import java.util.Arrays; //For addAll();
 import java.lang.Math;
 
@@ -57,12 +57,14 @@ public class Main{
         Character enemy3 = null;
         //All characters stored here so that user can select anyone in combat;
         ArrayList<Character> allEntities = new ArrayList();
+        ArrayList<Character> orderedCharacters = new ArrayList();
         //Counts the number of characters that can be selected at the moment
         int characters = 0;
         int numPlayers = 0;
         int numEnemies = 0;
         int selected = 0;
         int selectedForAttack = 0;
+        int turn = 0;
 
         //Player is in a fight
         boolean fighting = false;
@@ -183,10 +185,16 @@ public class Main{
                     }
                 break;
                 case "START":
-                if(checkForCharacters(party)){
+                if(checkForCharacters(party) && !fighting){
                     fighting = true;
                     characters += 3;
                     loadTestScenario(enemies, allEntities, enemy1, enemy2, enemy3);
+                    for(int i = 0; i < allEntities.size(); i++){
+                        allEntities.get(i).rollInitiative();
+                        orderedCharacters.add(allEntities.get(i));
+                    }
+                    
+                    setOrder(orderedCharacters);
                 }
                 break;
                 case "ATTACK":
@@ -294,7 +302,42 @@ public class Main{
         }
         return false;
     }
+
+    public static void setOrder(ArrayList<Character> orderedCharacters){
+        for(int x = 0; x < orderedCharacters.size(); x++){
+            int highestInitiative = x;
+            for(int y = x + 1; y < orderedCharacters.size(); y++){
+                if(orderedCharacters.get(y).roundInitiative > orderedCharacters.get(highestInitiative).roundInitiative && orderedCharacters.get(y).roundInitiative > orderedCharacters.get(x).roundInitiative){
+                    highestInitiative = y;
+                }
+            }
+            Collections.swap(orderedCharacters, x, highestInitiative);
+        }
+
+        for(int i = 0; i < orderedCharacters.size() - 1; i++){
+            orderedCharacters.get(i).next = orderedCharacters.get(i + 1);
+        }
+
+        System.out.println("------ TURN ORDER -----");
+        System.out.println("");
+        displayOrder(orderedCharacters.get(0));
+        System.out.println("");
+    }
+
+    public static void displayOrder(Character first){ //THIS FUNCTION IS RECURSIVE!!!
+        if(first == null){
+            //Do nothing, it's the end of the chain
+        }
+        else{
+            System.out.println("\t" + first.name + " -> ROLLED: " + first.roundInitiative);
+            displayOrder(first.next);
+        }
+    }
     
+    
+    public static void displayTurn(Character current){
+        System.out.println("It's " + current.name + "'s turn!\t (NEXT: " + current.next.name + ")");
+    }
 
     public static void death(Character deadChar){ //Call this function when someone is killed
         System.out.println(deadChar.name + " was SLAIN by " + deadChar.lastAttacker.name + " using their " + deadChar.lastAttacker.charInventory.equippedWeapon.name);

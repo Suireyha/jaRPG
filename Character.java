@@ -9,6 +9,7 @@ public class Character{
     Class charClass;
     Inventory charInventory;
     boolean player = false; //This variable tracks if the character is an enemy or player
+    boolean hasMoved = false; //This variable tracks if a character has acted in this round
 
     enum RaceType{
         HUMAN,
@@ -29,6 +30,8 @@ public class Character{
     public int constitution = 0; //Used to determine HP
     public int initiative = 0; //Used to determine turns
 
+    public int roundInitiative = 0;
+
 
     //Character stats
     boolean firstHealth = true; //Tracks if the health has been initially set for setHealth() function
@@ -37,8 +40,9 @@ public class Character{
     boolean furious = false; //Deals + 5 damage (mainly for rage potions)
     boolean alive = true;
 
-    //For handling display stuff
-    Character lastAttacker = null;
+    //Handling
+    Character lastAttacker = null; //The last character to deal damage to this character
+    Character next; //The next character to act. Based off initiative
 
 
     public Character(Preset preset){
@@ -636,5 +640,10 @@ public class Character{
         }
 
     }
+
+    public void rollInitiative(){
+        roundInitiative = Main.rand(1, 20) + initiative; //Rolls a dice and adds initiative to calculate initiative for this level
+    }
+
 
 }
