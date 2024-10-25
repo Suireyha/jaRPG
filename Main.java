@@ -131,6 +131,7 @@ public class Main{
             //Make sure all the data is up to date
             for(int i = 0; i < allEntities.size(); i++){
                 if(!allEntities.get(i).alive){
+                    death(allEntities.get(i));
                     allEntities.remove(i);
                     characters--;
                 }
