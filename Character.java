@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
 public class Character{
     //Character's Name, Race and Class (by which I mean in-game class not class object :3)
     String name; //This one is not called charName because it's not a class. player1.name gives the name of the player, player1.charRace.name gives the name of the race. 
@@ -34,7 +35,10 @@ public class Character{
     public double maxHealth = 0;
     public double health = 0;
     boolean furious = false; //Deals + 5 damage (mainly for rage potions)
+    boolean alive = true;
 
+    //For handling display stuff
+    Character lastAttacker = null;
 
 
     public Character(Preset preset){
@@ -293,7 +297,7 @@ public class Character{
 
     public class Inventory{
         ArrayList<Item> items = new ArrayList<Item>();
-        Item equippedWeapon;
+        Item equippedWeapon = Main.fists; //Can't be null :(
         Item equippedArmour;
 
         public Inventory(){
@@ -525,7 +529,7 @@ public class Character{
         String nameLine = "Name: " + name;
         String classLine = "Class: " + charClass.type;
         String raceLine = "Race: " + charRace.type;
-        String healthLine = "Health: " + health;
+        String healthLine = "Health: " + health + "/" + maxHealth;
         String strengthLine = "Strength: " + strength;
         String wisdomLine = "Wisdom: " + wisdom;
         String constitutionLine = "Constitution: " + constitution;
@@ -590,6 +594,45 @@ public class Character{
             double missingHealth = health/maxHealth;
             maxHealth = max;
             health = missingHealth*maxHealth;
+        }
+    }
+
+    public double calculateDamage(/*Character enemy*/){ //Later this will need to take the enemy's position
+        double dmg = 0.0;    
+        if(charInventory.equippedWeapon.type == Item.Type.MELEE){
+            dmg = 0.5 * strength;
+        }
+
+        if(charInventory.equippedWeapon.type == Item.Type.RANGED){
+            dmg = 0.5 * wisdom;
+        }
+        
+        //If the character is furious add 5 damage and end their rage
+        if(furious){
+            dmg += 5.0;
+            furious = false;
+        }
+        return dmg /* multiplied by distance modifier */;
+    }
+
+    public void attack(Character enemy){
+        //Algorithm that weighs in enemy initiative and distance
+        //Initiative should be rolled gainst 30
+        //Distance should just have a flat value-
+        int accuracy = Main.rand(initiative/2, 30);
+        if(accuracy < enemy.initiative){
+            System.out.println(name + " missed their attack!!");
+        }
+        else{
+            double attackDmg = calculateDamage();
+            enemy.health -= attackDmg;
+            System.out.println(name + " hit " + enemy.name + " for " + attackDmg + " damage!");
+            enemy.lastAttacker = this;
+        }
+
+        if(enemy.health <= 0){
+            //If the attacked character's health is below zero, they're deade
+            enemy.alive = false;
         }
 
     }
