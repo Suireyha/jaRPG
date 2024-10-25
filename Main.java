@@ -75,10 +75,13 @@ public class Main{
         
         //Launch sequence
         System.out.println(" ");
-        System.out.println("Welcome to jaRPG! Primarily developed by Marvin Kelly,\n" + 
-        "developed by Caleb Chew, RJ and Kong.\n" +
-        "\n" + 
-        "To get started, here are a couple useful commands:\n");
+        System.out.println("""
+        
+        Welcome to jaRPG! Primarily developed by Marvin Kelly,
+        developed by Caleb Chew, RJ and Kong.
+        
+        To get started, here are a couple useful commands:
+        """);
         System.out.println(" ");
         help();
         //If you're using presets for player characters, uncomment the next 6 liens:
