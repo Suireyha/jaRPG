@@ -277,7 +277,7 @@ public class Main{
                         for(int i = 0; i < enemies.size(); i++){
                             System.out.println("( " + enemies.get(i).name + " = " + (i + 1) + ")");
                         }
-                        selectedForAttack = Integer.valueOf(cin()) - 1;
+                        selectedForAttack = validIntegerInput(1, enemies.size()) - 1;
 
                         //Checks if selction if valid, loops if not
                         if(selectedForAttack >= 0 && selectedForAttack  < enemies.size()){
