@@ -75,13 +75,7 @@ public class Main{
         
         //Launch sequence
         System.out.println(" ");
-        System.out.println("""
-        
-        Welcome to jaRPG! Primarily developed by Marvin Kelly,
-        developed by Caleb Chew, RJ and Kong.
-        
-        To get started, here are a couple useful commands:
-        """);
+        System.out.println("Welcome to jaRPG! Primarily developed by Marvin Kelly, developed by Caleb Chew, RJ and Kong. To get started, here are a couple useful commands:");
         System.out.println(" ");
         help();
         //If you're using presets for player characters, uncomment the next 6 liens:
@@ -126,36 +120,6 @@ public class Main{
                 System.out.println("You lost...");
                 fighting = false;
                 //call some reset function that resets everything
-            }
-
-            //Make sure all the data is up to date
-            for(int i = 0; i < allEntities.size(); i++){
-                if(!allEntities.get(i).alive){
-                    death(allEntities.get(i));
-                    allEntities.remove(i);
-                    characters--;
-                }
-            }
-
-            for(int i = 0; i < party.size(); i++){
-                if(!party.get(i).alive){
-                    party.remove(i);
-                }
-            }
-
-            for(int i = 0; i < enemies.size(); i++){
-                if(!enemies.get(i).alive){
-                    enemies.remove(i);
-                }
-            }
-
-            for(int i = 0; i < orderedCharacters.size(); i++){
-                if(!orderedCharacters.get(i).alive){
-                    if(turn > i){
-                        turn--;
-                    }
-                    orderedCharacters.remove(i);
-                }
             }
 
             //updateCharacterLists(allEntities,party,enemies,orderedCharacters,turn,characters);
@@ -318,11 +282,34 @@ public class Main{
                     
             }
 
+            //Make sure all the data is up to date
+            for(int i = 0; i < allEntities.size(); i++){
+                if(!allEntities.get(i).alive){
+                    allEntities.remove(i);
+                    characters--;
+                }
+            }
 
+            for(int i = 0; i < party.size(); i++){
+                if(!party.get(i).alive){
+                    party.remove(i);
+                }
+            }
 
+            for(int i = 0; i < enemies.size(); i++){
+                if(!enemies.get(i).alive){
+                    enemies.remove(i);
+                }
+            }
 
-
-
+            for(int i = 0; i < orderedCharacters.size(); i++){
+                if(!orderedCharacters.get(i).alive){
+                    if(turn > i){
+                        turn--;
+                    }
+                    orderedCharacters.remove(i);
+                }
+            }
 
         }
 
