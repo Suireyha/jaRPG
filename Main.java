@@ -97,8 +97,13 @@ public class Main{
         boolean playing = true;
         while(playing){
             String uInput;
-            uInput = cin();
-            uInput = uInput.toUpperCase(); //This means that commands can be run without them having to be input as all uppercase by the user
+            if(fighting && orderedCharacters.get(turn).player == false){
+                uInput = " ";
+            }
+            else{
+                uInput = cin();
+                uInput = uInput.toUpperCase(); //This means that commands can be run without them having to be input as all uppercase by the user
+            }   
             switch(uInput){
                 case "HELP":
                     help();
@@ -201,6 +206,9 @@ public class Main{
                 if(!getSelectedCharacterType(allEntities.get(selected))){
                     System.out.println("Enemy is currently selected!");
                 }
+                else if(allEntities.get(selected) != orderedCharacters.get(turn)){
+                    System.out.println("It's not this character's turn!");
+                }
                 else if(checkForCharacters(party) && fighting){
                     //Check who's turn it is after initiative is added
                     boolean invalidS = true;
@@ -220,6 +228,9 @@ public class Main{
                     }
                     //Do the attack
                     party.get(selected).attack(enemies.get(selectedForAttack));
+                    turn++;
+                    turn %= characters;
+                    displayTurn(orderedCharacters.get(turn));
                 }
                 break;
                 case "USE":
@@ -233,16 +244,53 @@ public class Main{
                 case "QUIT":
                     playing = false;
                 break;
+                default:
+                //Do nothing
+                break;
                     
             }
 
+
             //Make sure all the data is up to date
-            for(int i = 0; i < characters; i++){
+            for(int i = 0; i < allEntities.size(); i++){
                 if(!allEntities.get(i).alive){
                     death(allEntities.get(i));
                     allEntities.remove(i);
                     characters--;
                 }
+            }
+
+            for(int i = 0; i < party.size(); i++){
+                if(!party.get(i).alive){
+                    party.remove(i);
+                }
+            }
+
+            for(int i = 0; i < enemies.size(); i++){
+                if(!enemies.get(i).alive){
+                    enemies.remove(i);
+                }
+            }
+
+            for(int i = 0; i < orderedCharacters.size(); i++){
+                if(!orderedCharacters.get(i).alive){
+                    if(turn > i){
+                        turn--;
+                    }
+                    orderedCharacters.remove(i);
+                }
+            }
+
+            //Enemy turn logic here
+            if(fighting && orderedCharacters.get(turn).player == false){
+                displayTurn(orderedCharacters.get(turn));
+                if((orderedCharacters.get(turn).health < orderedCharacters.get(turn).maxHealth/2) && orderedCharacters.get(turn).charInventory.has(healthPotion)){
+                    orderedCharacters.get(turn).charInventory.usePotion(healthPotion);
+                }
+                
+                orderedCharacters.get(turn).attack(party.get(rand(0, party.size() - 1)));
+                turn++;
+                turn %= characters;
             }
 
         }
@@ -336,12 +384,11 @@ public class Main{
     
     
     public static void displayTurn(Character current){
-        System.out.println("It's " + current.name + "'s turn!\t (NEXT: " + current.next.name + ")");
+        System.out.println("It's " + current.name + "'s turn!");
     }
 
     public static void death(Character deadChar){ //Call this function when someone is killed
         System.out.println(deadChar.name + " was SLAIN by " + deadChar.lastAttacker.name + " using their " + deadChar.lastAttacker.charInventory.equippedWeapon.name);
     }
-
 
 }

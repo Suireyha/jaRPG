@@ -445,6 +445,36 @@ public class Character{
             }
         }
 
+        public boolean has(Item check){
+            for(int i = 0; i < items.size(); i++){
+                if(items.get(i) == check){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void usePotion(Item potion){
+            //Use the potion
+            adjustHealth(potion.healMod);
+            if(!furious){
+                furious =  potion.makesFurious;
+            }
+
+            boolean removed = false; //So that we don't remove all their potions...
+            //This one is for when enemies use potions
+            for(int i = 0; i < items.size(); i++){ //This just removes the potion from their inventory
+                if(items.get(i) == potion && !removed){
+                    items.remove(i);
+                    removed = true;
+                }
+            }
+
+
+
+
+        }
+
         public void usePotion(){
             int numPotions = 0;
             String uInput;
@@ -484,9 +514,10 @@ public class Character{
                         }
                         if(uInputAsInt >= 0 && uInputAsInt < numPotions){
                             adjustHealth(potions.get(uInputAsInt).healMod);
-                            furious =  potions.get(uInputAsInt).makesFurious;
+                            if(!furious){
+                                furious =  potions.get(uInputAsInt).makesFurious;
+                            }
                             invalid = false;
-
                             System.out.println(name + " used " + potions.get(uInputAsInt).name + "!");
                             items.remove(potions.get(uInputAsInt));
                             sort();
@@ -633,7 +664,10 @@ public class Character{
             System.out.println(name + " hit " + enemy.name + " for " + attackDmg + " damage!");
             enemy.lastAttacker = this;
         }
-
+        if(enemy.health > 0 && enemy.health < 6){
+            enemy.furious = true; //Characters become furious when about to die
+            System.out.println(enemy.name + " musters an unfathomable and unyeilding rage... they become... FURIOUS!!! (+5 dmg next attack)");
+        }
         if(enemy.health <= 0){
             //If the attacked character's health is below zero, they're deade
             enemy.alive = false;
