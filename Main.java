@@ -345,12 +345,7 @@ public class Main{
         return true;
     }
 
-    public static String cin(){
-        Scanner term = new Scanner(System.in);  // Create a Scanner object
-        String uInput = term.nextLine();  // Read user input
-        //term.close(); //Avoid a memory leak lmao
-        return uInput;
-    }
+    
 
     public static int rand(int min, int max){
         int range = max - min + 1;
@@ -405,7 +400,33 @@ public class Main{
         }
     }
     
-    
+    public static String cin(){
+        Scanner term = new Scanner(System.in);  // Create a Scanner object
+        return term.nextLine();  // Read +return user input
+        //term.close(); //Avoid a memory leak lmao
+
+    }
+
+    public static int validIntegerInput(int min, int max){ // jus to check if input is valid, game would end due to exception in thread error.
+
+        int input = -1;
+        boolean valid = false;
+
+
+        while (!valid){
+            try {
+                String userInput = cin();
+                input = Integer.parseInt(userInput);
+                valid = true;
+
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input!");
+            }
+        }
+
+        return input;
+        //term.close();
+    }
     public static void displayTurn(Character current){
         System.out.println("It's " + current.name + "'s turn!");
     }
