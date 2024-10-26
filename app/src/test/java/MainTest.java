@@ -116,8 +116,8 @@ public class MainTest {
         // Test combat initialization
         assertTrue("Player should be alive at combat start", player.alive);
         assertTrue("Enemy should be alive at combat start", enemy.alive);
-        assertEquals("Player should have full health", player.maxHealth, player.health);
-        assertEquals("Enemy should have full health", enemy.maxHealth, enemy.health);
+        assertEquals("Player should have full health", player.maxHealth, player.health, 0.001);
+        assertEquals("Enemy should have full health", enemy.maxHealth, enemy.health, 0.001);
         
         // Add success message
         System.out.println("✓ Combat initialization test passed successfully");

@@ -90,6 +90,17 @@ public class Main{
         //Game Loop
         boolean playing = true;
         while(playing){
+            //Win/Loss handling - Move this BEFORE input processing
+            if(fighting && enemies.size() < 1){
+                System.out.println("CONGRATULATIONS!!! You defeated the enemy party!");
+                fighting = false;
+                continue; // Skip to next iteration
+            }
+            if(fighting && (party.size() < 1 || allPlayersDead(party))){
+                System.out.println("You lost...");
+                fighting = false;
+                continue; // Skip to next iteration
+            }
 
             //Enemy turn logic here
             if(fighting && !orderedCharacters.get(turn).player){
@@ -119,20 +130,6 @@ public class Main{
                     }
                 }
             }
-
-            //Win/Loss handling
-            if(fighting && enemies.size() < 1){
-                System.out.println("CONGRATULATIONS!!! You defeated the enemy party!");
-                fighting = false;
-                //call some reset function that resets everything
-            }
-            if(fighting && party.size() < 1){
-                System.out.println("You lost...");
-                fighting = false;
-                //call some reset function that resets everything
-            }
-
-            //updateCharacterLists(allEntities,party,enemies,orderedCharacters,turn,characters);
 
             String uInput;
             if(fighting && orderedCharacters.get(turn).player == false){
@@ -452,6 +449,10 @@ public class Main{
 
     public static void death(Character deadChar){ //Call this function when someone is killed
         System.out.println(deadChar.name + " was SLAIN by " + deadChar.lastAttacker.name + " using their " + deadChar.lastAttacker.charInventory.equippedWeapon.name);
+    }
+
+    private static boolean allPlayersDead(ArrayList<Character> players) {
+        return players.stream().allMatch(player -> !player.alive);
     }
 
 }
