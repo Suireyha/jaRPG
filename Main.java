@@ -92,7 +92,7 @@ public class Main{
         while(playing){
 
             //Enemy turn logic here
-            if(fighting && orderedCharacters.get(turn).player == false){
+            if(fighting && !orderedCharacters.get(turn).player){
                 if((orderedCharacters.get(turn).health < orderedCharacters.get(turn).maxHealth/2) && orderedCharacters.get(turn).charInventory.has(healthPotion)){
                     orderedCharacters.get(turn).charInventory.usePotion(healthPotion);
                 }
@@ -106,6 +106,16 @@ public class Main{
                         if(orderedCharacters.get(turn) == party.get(i)){
                             selected = i;
                         }
+                    }
+                }
+            }
+
+            // Automatically select the player character on their turn
+            if(fighting && orderedCharacters.get(turn).player){
+                for(int i = 0; i < party.size(); i++){
+                    if(orderedCharacters.get(turn) == party.get(i)){
+                        selected = i;
+                        System.out.println(party.get(selected).name + "'s next action will be:");
                     }
                 }
             }
