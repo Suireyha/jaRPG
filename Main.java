@@ -324,11 +324,17 @@ public class Main{
 
             for(int i = 0; i < orderedCharacters.size(); i++){
                 if(!orderedCharacters.get(i).alive){
-                    if(turn > i){
-                        turn--;
+                    if(turn >= i){
+                        turn--; // Decrement turn if it points to a removed character
                     }
                     orderedCharacters.remove(i);
+                    i--; // Decrement i to account for the removed element
                 }
+            }
+
+            // Ensure turn is not negative
+            if(turn < 0 && !orderedCharacters.isEmpty()) {
+                turn = 0; // Reset turn to 0 if it goes negative
             }
 
         }
