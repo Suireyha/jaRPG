@@ -29,7 +29,7 @@ After executing, the user should be greeted with a list of avaliable commands. T
 ## How to play
 When you start the game, you will see a list of commands you can use. Here’s how each of them works:
 
-### HELP - Shows the list of available commands.
+#### HELP - Shows the list of available commands.
 Use this if you ever need to remember the list of commands during the game.
 
 
