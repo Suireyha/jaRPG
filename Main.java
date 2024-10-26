@@ -297,12 +297,22 @@ public class Main{
                 if(!allEntities.get(i).alive){
                     allEntities.remove(i);
                     characters--;
+                    // Adjust turn if necessary
+                    if(turn >= i) {
+                        turn--; // Decrement turn if it points to a removed character
+                    }
+                    i--; // Decrement i to account for the removed element
                 }
             }
 
             for(int i = 0; i < party.size(); i++){
                 if(!party.get(i).alive){
                     party.remove(i);
+                    // Adjust turn if necessary
+                    if(turn >= i) {
+                        turn--; // Decrement turn if it points to a removed character
+                    }
+                    i--; // Decrement i to account for the removed element
                 }
             }
 
