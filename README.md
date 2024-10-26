@@ -29,10 +29,10 @@ After executing, the user should be greeted with a list of avaliable commands. T
 ## How to play
 When you start the game, you will see a list of commands you can use. Here’s how each of them works:
 
-#### HELP - Shows the list of available commands.
+* #### HELP - Shows the list of available commands.
 Use this if you ever need to remember the list of commands during the game.
 
-#### CREATE - Starts the character creation process.
+* #### CREATE - Starts the character creation process.
 This is the first thing you should do when starting the game.
 You will be prompted to choose your character’s name, race, class.
 
