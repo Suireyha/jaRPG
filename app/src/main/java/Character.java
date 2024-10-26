@@ -52,18 +52,18 @@ public class Character{
         charClass = new Class(preset.pClass);
         charInventory = new Inventory();
         player = preset.player;
-
+        setHealth();  
+        
         if(preset.player){
             System.out.println("");
-            System.out.println(name + " the " + charClass.type + " joins the party!");
+            System.out.println(name + " the " + charClass.type + " (" + health + "/" + maxHealth + ") joins the party!");
             System.out.println("");
         }
         else{
             System.out.println("");
-            System.out.println(name + " the " + charClass.type + " appears! They don't look happy...");
+            System.out.println(name + " the " + charClass.type + " (" + health + "/" + maxHealth + ") appears! They don't look happy...");
             System.out.println("");       
         }
-        setHealth();
     }
 
     public Character(){
@@ -103,7 +103,7 @@ public class Character{
         player = true;
         setHealth();
         System.out.println("");
-        System.out.println(name + " the " + charClass.type + " joins the party!");
+        System.out.println(name + " the " + charClass.type + " (" + health + "/" + maxHealth + ") joins the party!");
         System.out.println("");
 
     }
@@ -639,13 +639,13 @@ public class Character{
         if(charInventory.equippedWeapon.type == Item.Type.MELEE){
             dmg = 0.5 * strength;
         }
-
         if(charInventory.equippedWeapon.type == Item.Type.MAGIC){
             dmg = 0.5 * wisdom;
         }
         
         //If the character is furious add 5 damage and end their rage
         if(furious){
+            System.out.println(name + " (" + health + "/" + maxHealth + ") attacks with furious rage! (+5 damage)");
             dmg += 5.0;
             furious = false;
         }
@@ -658,24 +658,23 @@ public class Character{
         //Distance should just have a flat value-
         int accuracy = Main.rand(initiative/2, 30);
         if(accuracy < enemy.initiative){
-            System.out.println(name + " missed their attack!!");
+            System.out.println(name + " (" + health + "/" + maxHealth + ") missed their attack!!");
         }
         else{
             double attackDmg = calculateDamage();
             enemy.health -= attackDmg;
-            System.out.println(name + " hit " + enemy.name + " for " + attackDmg + " damage!");
+            System.out.println(name + " (" + health + "/" + maxHealth + ") hit " + enemy.name + " (" + enemy.health + "/" + enemy.maxHealth + ") for " + attackDmg + " damage!");
             enemy.lastAttacker = this;
         }
         if(enemy.health > 0 && enemy.health < 6){
             enemy.furious = true; //Characters become furious when about to die
-            System.out.println(enemy.name + " musters an unfathomable and unyeilding rage... they become... FURIOUS!!! (+5 dmg next attack)");
+            System.out.println(enemy.name + " (" + enemy.health + "/" + enemy.maxHealth + ") musters an unfathomable and unyielding rage... they become... FURIOUS!!! (+5 dmg next attack)");
         }
         if(enemy.health <= 0){
             //If the attacked character's health is below zero, they're deade
             enemy.alive = false;
             Main.death(enemy);
         }
-
     }
 
     public void rollInitiative(){

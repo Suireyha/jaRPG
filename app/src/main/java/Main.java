@@ -255,13 +255,13 @@ public class Main{
                         //Display avaliable enemies
                         System.out.println("Select an Enemy:");
                         for(int i = 0; i < enemies.size(); i++){
-                            System.out.println("( " + enemies.get(i).name + " = " + (i + 1) + ")");
+                            System.out.println("[" + enemies.get(i).name + " (" + enemies.get(i).health + "|" + enemies.get(i).maxHealth + ") = " + (i + 1) + "]");
                         }
                         selectedForAttack = validIntegerInput(1, enemies.size()) - 1;
 
                         //Checks if selction if valid, loops if not
                         if(selectedForAttack >= 0 && selectedForAttack  < enemies.size()){
-                            System.out.println(allEntities.get(selected).name + " is selected");
+                            System.out.println(allEntities.get(selected).name + " (" + allEntities.get(selected).health + "|" + allEntities.get(selected).maxHealth + ") is selected");
                             invalidS = false;
                         }
                     }
@@ -411,7 +411,7 @@ public class Main{
 
     public static void displayOrder(Character first){ //THIS FUNCTION IS RECURSIVE!!!
         if(first != null){
-            System.out.println("\t" + first.name + " -> ROLLED: " + first.roundInitiative);
+            System.out.println("\t" + first.name + " (" + first.charClass.type + ") [" + first.health + "/" + first.maxHealth + "] -> ROLLED: " + first.roundInitiative);
             displayOrder(first.next);
         }
     }
