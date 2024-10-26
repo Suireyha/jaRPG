@@ -1,7 +1,7 @@
-public class Item{
+public class Item {
     /*Okay if anyone works on this while I'm not looking, PLEASE be careful-
      * I think to handle items properly we can't use an enumerator. We might have
-     * to make another java file called ItemType.java or smth and that will contain 
+     * to make another java file called ItemType.java or something and that will contain 
      * a MELEE, RANGED, POTION, & EQUIPABLE class. Then we can give them each an enum 
      * called Type which holds the type of MELEE weapon it is for example- like an Axe or 
      * a Sword.
