@@ -61,13 +61,13 @@ For example, you can use a health potion to restore HP.
 Use this command when you want to exit the game. 
 
 ## Tips for playing
-### Create Your Character Wisely: 
+#### Create Your Character Wisely: 
 When making your character, select a race and class that match your playstyle. For example, if you prefer close combat, consider becoming a Fighter or Barbarian. If you like spells, choose a Mage.
 
-### Manage your inventory: 
+#### Manage your inventory: 
 Keep track of what you collect. Equip your character with top-tier equipment and keep some healing items on hand for tough battles.
 
-### Plan Your Combat Moves: 
+#### Plan Your Combat Moves: 
 Because the game is turn-based, you should anticipate and plan your actions. Sometimes defending or using an item is more effective than attacking!
 
 ## Project Roadmap (IMPORTANT!!)
