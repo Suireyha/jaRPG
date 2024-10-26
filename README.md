@@ -36,28 +36,28 @@ Use this if you ever need to remember the list of commands during the game.
 This is the first thing you should do when starting the game.
 You will be prompted to choose your character’s name, race, class.
 
-#### SELECT - Choose an existing character to control.
+* #### SELECT - Choose an existing character to control.
 If you have multiple characters, this lets you pick which one you want to play or modify.
 
-#### SHOW INV - Displays the inventory of the currently selected character.
+* #### SHOW INV - Displays the inventory of the currently selected character.
 View all items the character is carrying. You can see weapons, armour, and potions.
 
-#### SHOW STATS - Shows the character’s stat sheet.
+* #### SHOW STATS - Shows the character’s stat sheet.
 Use this to see your character’s detailed information and attributes, including strength, wisdom, constitution, and initiative.
 
-#### EQUIP - Equips an item from the inventory.
+* #### EQUIP - Equips an item from the inventory.
 Select an item from your inventory to equip. For example, you might equip a sword, daggers, or staffs to boost your combat abilities.
 
-#### START - Begins combat.
+* #### START - Begins combat.
 Use this command to initiate combat. Make sure your character is selected, prepared and equipped before starting a fight.
 
-#### ATTACK - Attack an enemy during combat.
+* #### ATTACK - Attack an enemy during combat.
 When it’s your character’s turn, you can choose to attack an opponent. Your success will depend on your character’s stats and equipment.
 
-#### USE - Use an item from your inventory during or outside combat.
+* #### USE - Use an item from your inventory during or outside combat.
 For example, you can use a health potion to restore HP.
 
-#### QUIT - Ends the program.
+* #### QUIT - Ends the program.
 Use this command when you want to exit the game. 
 
 ## Tips for playing
