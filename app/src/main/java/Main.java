@@ -343,19 +343,21 @@ public class Main{
 
     }
 
-    static public void help(){
-        System.out.println("\n" +
-            "HELP -> shows this list again\n" +
-            "CREATE -> starts the character creator (you should use this now)\n" +
-            "SELECT -> allows you to select a character\n" +
-            "SHOW INV -> displays the inventory of the selected character\n" +
-            "SHOW STATS -> displays the character sheet of the selected character\n" +
-            "EQUIP -> equips an item from your inventory\n" +
-            "START -> starts combat\n" +
-            "ATTACK -> the character in turn can attack an enemy\n" +
-            "USE -> allows you to use an item from your inventory\n" +
-            "QUIT -> ends program\n" +
-            "\n");
+    static public void help() {
+        System.out.println("""
+
+            HELP -> shows this list again
+            CREATE -> starts the character creator (you should use this now)
+            SELECT -> allows you to select a character
+            SHOW INV -> displays the inventory of the selected character
+            SHOW STATS -> displays the character sheet of the selected character
+            EQUIP -> equips an item from your inventory
+            START -> starts combat
+            ATTACK -> the character in turn can attack an enemy
+            USE -> allows you to use an item from your inventory
+            QUIT -> ends program
+
+            """);
     }
 
     public static boolean checkForCharacters(ArrayList<Character> party){
