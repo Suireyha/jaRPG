@@ -3,7 +3,17 @@ import java.util.Arrays; //Import ArrayList
 import java.util.Collections;
 import java.util.Scanner; //For addAll();
 
+
 public class Main{
+
+    // Colouring for terminal text in vscode
+public static final String RED = "\033[0;31m"; 
+public static final String GREEN = "\033[0;32m"; 
+public static final String YELLOW = "\033[0;33m";
+public static final String CYAN = "\033[0;36m";
+public static final String PURPLE = "\033[0;35m";
+public static final String RESET = "\033[0m";
+
     // Constants for maximum players
     private static final int MAX_PLAYERS = 3;
     
@@ -37,7 +47,7 @@ public class Main{
     static Preset pre3 = new Preset("Enemy Figther", "HUMAN", "FIGHTER", false);
 
     //PLAYER PRESETS FOR TESTING
-    static Preset pre4 = new Preset("EJACULUS", "ELF", "MAGE", true);
+    static Preset pre4 = new Preset("ARJAY", "ELF", "MAGE", true);
     static Preset pre5 = new Preset("GROGU", "ORC", "BARBARIAN", true);
     static Preset pre6 = new Preset("CABLE", "HUMAN", "ASSASSIN", true);
 
@@ -74,10 +84,10 @@ public class Main{
         */
         
         //Launch sequence
-        System.out.println(" ");
-        System.out.println("Welcome to jaRPG! Primarily developed by Marvin Kelly, developed by Caleb Chew, RJ and Kong. To get started, here are a couple useful commands:");
-        System.out.println(" ");
-        help();
+        System.out.println(YELLOW + " ");
+    System.out.println("Welcome to jaRPG! Primarily developed by Marvin Kelly,\ndeveloped by Caleb Chew, RJ and Kong.\nTo get started, here are a couple useful commands:" + RESET);
+    System.out.println(" ");
+    help();
         //If you're using presets for player characters, uncomment the next 6 liens:
         player1 = new Character(pre4);
         player2 = new Character(pre5);
@@ -92,12 +102,12 @@ public class Main{
         while(playing){
             //Win/Loss handling - Move this BEFORE input processing
             if(fighting && enemies.size() < 1){
-                System.out.println("CONGRATULATIONS!!! You defeated the enemy party!");
+                System.out.println(GREEN + "CONGRATULATIONS!!! You defeated the enemy party!" + RESET);
                 fighting = false;
                 continue; // Skip to next iteration
             }
             if(fighting && (party.size() < 1 || allPlayersDead(party))){
-                System.out.println("You lost...");
+                System.out.println(RED + "You lost..." + RESET);
                 fighting = false;
                 continue; // Skip to next iteration
             }
@@ -177,11 +187,11 @@ public class Main{
                     boolean invalid = true;
                     while(invalid){
 
-                        System.out.println("Who do you want to select?");
+                        System.out.println(PURPLE + "Who do you want to select?" + RESET);
 
                         //Displays all of the avaliable characters to select
                         for(int i = 0; i < characters; i++){
-                            System.out.println("( " + allEntities.get(i).name + " = " + (i + 1) + ")");
+                            System.out.println(PURPLE + "( " + allEntities.get(i).name + " = " + (i + 1) + ")" + RESET);
                         }
                         selection = validIntegerInput(1, characters);
 
@@ -341,8 +351,7 @@ public class Main{
     }
 
     static public void help() {
-        System.out.println("""
-
+        System.out.println(YELLOW + """
             HELP -> shows this list again
             CREATE -> starts the character creator (you should use this now)
             SELECT -> allows you to select a character
@@ -353,8 +362,7 @@ public class Main{
             ATTACK -> the character in turn can attack an enemy
             USE -> allows you to use an item from your inventory
             QUIT -> ends program
-
-            """);
+            """ + RESET);
     }
 
     public static boolean checkForCharacters(ArrayList<Character> party){
@@ -437,7 +445,7 @@ public class Main{
                     System.out.println("Input Error!");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input!");
+                System.out.println(RED + "Invalid input!" + RESET);
             }
         }
         return input;
